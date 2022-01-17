@@ -1,4 +1,7 @@
 <template>
+  <div class="page index-page">
+    
+  </div>
 </template>
 
 <script>

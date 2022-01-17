@@ -1,1 +1,45 @@
-$red: green;
+@font-face {
+    font-family: "Bebas";
+    src: local("Bebas"), url(~assets/fonts/Bebas.ttf) format("truetype");
+}
+
+$maxwidth: 1440px;
+$black: black;
+$white: white;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    color: $white;
+}
+html {
+    min-height: 100vh;
+    body,
+    #__nuxt,
+    #__layout,
+    .layout {
+        height: 100%;
+        min-height: 100vh;
+        display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: column;
+    }
+
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        .page {
+            flex-grow: 1; width:100%;
+            height: 100%; max-width: $maxwidth;
+        }
+    }
+}
+
+.link {
+    text-decoration: none;
+}
