@@ -1,10 +1,10 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <NuxtLink to="/" class="link">Animation</NuxtLink>
-      <ul class="links">
-        <NuxtLink to="" class="link">List</NuxtLink>
-      </ul>
+      <NuxtLink to="/" class="link bebas">Animations</NuxtLink>
+      <!-- <ul class="links">
+        <NuxtLink to="" class="link bebas">List</NuxtLink>
+      </ul> -->
     </div>
   </div>
 </template>

@@ -1,8 +1,7 @@
 <template>
   <div class="page index-page">
-    <h1 class="bebas standart-title lefted">
-1124214
-    </h1>
+    
+    <AnimationList/>
   </div>
 </template>
 

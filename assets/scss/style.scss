@@ -2,7 +2,6 @@
     font-family: "Bebas";
     src: local("Bebas"), url(~assets/fonts/Bebas.ttf) format("truetype");
 }
-
 $maxwidth: 1440px;
 $black: black;
 $white: white;
@@ -12,6 +11,7 @@ $white: white;
     padding: 0;
     box-sizing: border-box;
     position: relative;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 html {
     min-height: 100vh;
@@ -38,16 +38,18 @@ html {
             height: 100%;
             max-width: $maxwidth;
             color: $black;
+            padding: 20px 0px;
             @media screen and (max-width: $maxwidth)
             {
                 padding:0px 10px !important;
             }
         }
         .bebas {
-            font-family: "Bebas";
+            font-family: "Bebas" !important;
         }
         .link {
             text-decoration: none;
+            color: inherit;
         }
         .centered{
             width:100%;
