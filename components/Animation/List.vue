@@ -11,7 +11,6 @@
 export default {
   methods:{
     selectAnimation(animation_name){
-      console.log("1");
       this.$store.commit('animations/select_animation', animation_name);
     }
   }

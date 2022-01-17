@@ -2,7 +2,7 @@
   <div class="page animation-page">
       <AnimationSlider/>
       <div class="content">
-          
+          <AnimationTodo/>
       </div>
   </div>
 </template>
