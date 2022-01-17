@@ -18,5 +18,6 @@ export default {};
   justify-content: center;
   padding: 0px 10px;
   font-family: "Bebas";
+  
 }
 </style>

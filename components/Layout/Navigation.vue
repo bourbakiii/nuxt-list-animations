@@ -30,6 +30,7 @@ export default {};
     .link {
       font-size: 27px;
       transition: 0.1s;
+      color:$white;
       &:hover {
         opacity: 0.9;
       }

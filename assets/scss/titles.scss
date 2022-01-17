@@ -1,0 +1,24 @@
+.standart-title{
+    font-size: 30px;
+    @media screen and (max-width:$maxwidth) {
+    font-size: 29px;
+    }
+    @media screen and (max-width:1024px) {
+        font-size: 28px;
+    }
+    @media screen and (max-width:768px) {
+        font-size: 28px;
+    }
+    @media screen and (max-width:425px) {
+        font-size: 27px;
+    }
+    @media screen and (max-width:425px) {
+        font-size: 27px;
+    }
+    @media screen and (max-width:375px) {
+        font-size: 26px;
+    }
+    @media screen and (max-width:325px) {
+        font-size: 25px;
+    }
+}
