@@ -16,6 +16,7 @@ export default {};
 <style lang='scss' scoped>
 .wrapper {
   width: 100vw;
+  max-width:100vw;
   height: 60px;
   display: flex;
   align-items: center;

@@ -21,7 +21,7 @@ export default {
 .animation-list {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   flex-direction: column;
     .title{
         margin: 10px 0px;

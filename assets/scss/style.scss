@@ -5,13 +5,17 @@
 $maxwidth: 1440px;
 $black: black;
 $white: white;
+$red: rgba(255,100,100);
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     position: relative;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    &::selection{
+        background-color: rgba(122,122,122,.3);
+    }
 }
 html {
     min-height: 100vh;
@@ -43,6 +47,10 @@ html {
             {
                 padding:0px 10px !important;
             }
+
+        }
+        button, input[type="submit"]{
+            cursor: pointer; outline: none;
         }
         .bebas {
             font-family: "Bebas" !important;
