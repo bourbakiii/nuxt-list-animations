@@ -1,7 +1,5 @@
 <template>
   <div class="page index-page">
-    
-    <AnimationList/>
   </div>
 </template>
 
