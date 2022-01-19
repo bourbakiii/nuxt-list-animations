@@ -5,7 +5,7 @@
 $maxwidth: 1440px;
 $black: black;
 $white: white;
-$red: rgba(255,100,100);
+$red: rgba(255, 100, 100);
 $modalsZIndex: 1000;
 
 * {
@@ -13,26 +13,23 @@ $modalsZIndex: 1000;
     padding: 0;
     box-sizing: border-box;
     position: relative;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    &::selection{
-        background-color: rgba(122,122,122,.3);
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    &::selection {
+        background-color: rgba(122, 122, 122, 0.3);
     }
 }
 html {
-    
     min-height: 100vh;
-    &{
+    & {
         ::-webkit-scrollbar {
             width: 0;
-          }
-          
-          /*Убрать полосу прокрутки для всей страницы*/
-          ::-webkit-scrollbar {
+        }
+
+        /*Убрать полосу прокрутки для всей страницы*/
+        ::-webkit-scrollbar {
             width: 0;
-          }
+        }
     }
-
-
 
     body,
     #__nuxt,
@@ -58,14 +55,14 @@ html {
             height: 100%;
             color: $black;
             padding: 20px 0px;
-            @media screen and (max-width: $maxwidth)
-            {
-                padding:0px 10px !important;
+            @media screen and (max-width: $maxwidth) {
+                padding: 0px 10px !important;
             }
-
         }
-        button, input[type="submit"]{
-            cursor: pointer; outline: none;
+        button,
+        input[type="submit"] {
+            cursor: pointer;
+            outline: none;
         }
         .bebas {
             font-family: "Bebas" !important;
@@ -74,18 +71,27 @@ html {
             text-decoration: none;
             color: inherit;
         }
-        .centered{
-            width:100%;
+        .centered {
+            width: 100%;
             text-align: center;
         }
-        .righted{
+        .righted {
             text-align: right;
         }
-        .lefted{
+        .lefted {
             text-align: left;
         }
+        .unselectable,
+        .unselectable * {
+            &::selection {
+                background-color: transparent;
+            }
+        }
+        .volume {
+            text-shadow: 0 1px 0 rgba(204, 204, 204, 0.200), 0 2px 0 hsla(0, 0%, 79%, 0.200), 0 3px 0 rgba(187, 187, 187, 0.200), 0 4px 0 hsla(0, 0%, 73%, 0.200), 0 5px 0 hsla(0, 0%, 67%, 0.200),
+                0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3),
+                0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2),
+                0 20px 20px rgba(0, 0, 0, 0.15);
+        }
     }
-
 }
-
-
