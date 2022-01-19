@@ -1,10 +1,9 @@
 <template>
   <div class="animation todo-animation">
     <h1 class="standart-title centered">Список дел</h1>
+    <button @click='clearItems'>очистить</button>
     <form
       @submit.prevent="addToDo"
-      :problemText="problem.text"
-      :class="{ 'problem-text': !!problem.text }"
       class="input-block"
     >
       <input
@@ -15,16 +14,19 @@
         name="todo-input"
       />
     </form>
-    <div v-if="items.length" class="content">
-      <transition-group tag="ul" name="list" appear>
-        <AnimationTodoItem
-          @remove="removeItem"
-          v-for="item in items" :key="item.id"
-          :item="item"
-        />
-      </transition-group>
-    </div>
-    <span v-else>Woohoo, nothing left todo!</span>
+    <transition name="switch" mode="out-in">
+      <div v-if="items.length">
+        <transition-group tag="ul" name="list" appear>
+          <AnimationTodoItem
+            @remove="removeItem"
+            v-for="item in items"
+            :key="item.id"
+            :item="item"
+          />
+        </transition-group>
+      </div>
+      <span v-else>Woohoo, nothing left todo!</span>
+    </transition>
   </div>
 </template>
 
@@ -43,22 +45,22 @@ export default {
   methods: {
     addToDo() {
       if (!this.new_item_value) {
-        this.problem.text = "Неверный формат";
-        clearTimeout(this.problem.timer);
-        setTimeout(() => {
-          this.problem.text = null;
-        }, 3000);
-        return;
+        this.$store.commit('alerts/add','123');
       }
       this.items.unshift({
         value: this.new_item_value,
-        id: this.items.length ? +this.items[this.items.length - 1].id + 1 : 1,
+        id: this.items.length ? +this.items[0].id + 1 : 1,
       });
       this.new_item_value = "";
       localStorage.setItem("todo_items", JSON.stringify(this.items));
     },
+    clearItems(){
+      this.items = [];
+      localStorage.setItem("todo_items", JSON.stringify(this.items));
+    },
     removeItem(item) {
       this.items = this.items.filter((todo) => +todo.id != +item.id);
+      localStorage.setItem("todo_items", JSON.stringify(this.items));
     },
   },
   beforeCreate() {
@@ -81,29 +83,41 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-/* list transitions */
-.list-enter-from {
+.switch-enter-from,
+.switch-leave-to {
   opacity: 0;
-  transform: scale(0.6);
+  transform: translateY(20px);
 }
-.list-enter-active {
-  transition: all 0.4s ease;
+.switch-enter-to,
+.switch-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
 }
+.switch-enter-active {
+  transition: all 0.5s ease;
+}
+.switch-leave-active {
+  transition: all 0.5s ease;
+  position: absolute;
+  width: 100%;
+}
+
+.list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: scale(0.6);
+  transform: scale(0.8);
+}
+.list-enter-active {
+  transition: all 0.4s ease-in-out;
 }
 .list-leave-active {
   transition: all 0.4s ease;
   position: absolute; /* for move transition after item leaves */
 }
 .list-move {
-  transition: all 0.3s ease;
+  transition: all 0.6s ease-in-out;
 }
 .todo-animation {
-  width: 100%;
-  max-width: 100%;
-  padding: 10px;
   .input-block {
     width: 100%;
     display: flex;
@@ -111,38 +125,15 @@ export default {
     justify-content: flex-start;
     flex-direction: row;
     padding-bottom: 15px;
-    height: 60px;
-    transition: margin 0.3s;
+    height: 60px; 
     input[type="text"] {
       width: 100%;
       height: 100%;
-      border-radius: 15px 0px 0px 15px;
+      border-radius: 15px;
       outline: none;
-      border: 2px solid $black;
-      border-right: none;
-      padding: 0px 10px;
-    }
-    input[type="submit"] {
-      width: 140px;
-      height: 100%;
-      border-radius: 0px 15px 15px 0px;
-      outline: none;
-      border: 2px solid $black;
-      color: white;
-      background-color: $black;
-      font-size: 15px;
-    }
-
-    &.problem-text {
-      margin-bottom: 15px;
-      &::before {
-        content: attr(problemText);
-        font-size: 15px;
-        color: $red;
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-      }
+      box-shadow: inset 0px 0px 10px 1px rgba($black, 0.1);
+      border: none;
+      padding: 0px 20px;
     }
   }
   .animation-todo-item {

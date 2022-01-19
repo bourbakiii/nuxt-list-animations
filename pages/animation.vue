@@ -14,8 +14,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .content{
-    width:100%; height:max-content;
-    border:1px solid black;
+    width:100%;
     border-radius: 15px;
 }
 </style>

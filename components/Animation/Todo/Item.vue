@@ -1,7 +1,7 @@
 <template>
-  <li @click="remove" class="animation-todo-item item">
+  <button @click="remove" class="animation-todo-item item">
     {{ item.value }}
-  </li>
+  </button>
 </template>
 
 <script>
@@ -26,9 +26,16 @@ export default {
   margin-bottom: 10px;
   padding: 10px;
   background: white;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  outline: none;
+  border:none;
+  text-align: left;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  }
 }
 </style>

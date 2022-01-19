@@ -18,7 +18,21 @@ $red: rgba(255,100,100);
     }
 }
 html {
+    
     min-height: 100vh;
+    &{
+        ::-webkit-scrollbar {
+            width: 0;
+          }
+          
+          /*Убрать полосу прокрутки для всей страницы*/
+          ::-webkit-scrollbar {
+            width: 0;
+          }
+    }
+
+
+
     body,
     #__nuxt,
     #__layout,
