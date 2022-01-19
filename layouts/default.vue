@@ -2,6 +2,7 @@
   <div class="layout default-layout">
       <LayoutNavigation/>
       <Nuxt/>
+      <Alerts/>
       <LayoutFooter/>
   </div>
 </template>
