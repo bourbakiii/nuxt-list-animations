@@ -55,8 +55,9 @@ html {
             height: 100%;
             color: $black;
             padding: 20px 0px;
-            @media screen and (max-width: $maxwidth) {
-                padding: 0px 10px !important;
+            @media screen and (max-width: calc($maxwidth + 2px)) {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
             }
         }
         button,
