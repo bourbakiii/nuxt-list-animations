@@ -1,19 +1,21 @@
 <template>
   <div class="page index-page">
-    {{$store.state.basket}}
     <div class="product" v-for="product in products" :key="product.id">
       <p class="name lefted">
         {{ product.name }}
       </p>
       <div class="buttons">
-        <div v-if="product.count > 0" class="crease-buttons">
-          <button @click="decrease(product)" class="crease decrease">
-            -
+          <div v-if="product.count > 0" class="crease-buttons">
+            <button @click="remove(product)" class="animated crease decrease">x</button>
+            <button @click="decrease(product)" class="animated crease decrease">
+              -
+            </button>
+            <p class="animated count">{{ product.count }}</p>
+            <button @click="crease(product)" class="crease">+</button>
+          </div>
+          <button v-else @click="crease(product)" class="crease add-button">
+            +
           </button>
-          <p class="count">{{ product.count }}</p>
-          <button @click="crease(product)" class="crease">+</button>
-        </div>
-        <button v-else @click="crease(product)" class="crease add-button">+</button>
       </div>
     </div>
   </div>
@@ -29,21 +31,20 @@ export default {
           id: 1,
           name: "Product№1",
           stock: 5,
-          count: 0
+          count: 0,
         },
       ],
     };
   },
   methods: {
+    remove(product) {
+      this.$store.commit("basket/remove", product);
+    },
     crease(product) {
-      this.$store.commit('basket/crease',product);
-      if(product.count==0) {
-        this.products[this.products.map(el=>el.id).indexOf(+product.id)] = this.$store.state.basket[this.$store.state.basket.map(el=>el.id).indexOf(+product.id)];
-      }
+      this.$store.commit("basket/crease", product);
     },
     decrease(product) {
-      this.$store.commit('basket/decrease',product);
-      
+      this.$store.commit("basket/decrease", product);
     },
   },
 };
@@ -72,7 +73,18 @@ export default {
       justify-content: flex-end;
       align-self: flex-end;
       height: 35px;
-      width:max-content;
+      width: max-content;
+      .animated {
+        animation: show 0.4s forwards;
+        @keyframes show {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+      }
       button {
         background-color: transparent;
         outline: none;
@@ -82,9 +94,9 @@ export default {
         border: 1px solid black;
       }
       .add-button {
-          border-radius: 90px;
-          width: 100%;
-          width: 35px;
+        border-radius: 90px;
+        width: 100%;
+        width: 35px;
       }
       .crease-buttons {
         width: 100%;
