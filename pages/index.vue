@@ -1,21 +1,33 @@
 <template>
   <div class="page index-page">
     <div class="product" v-for="product in products" :key="product.id">
+      <button
+        v-if="product.count > 0"
+        @click="remove(product)"
+        class="animated delete"
+      >
+        x
+      </button>
       <p class="name lefted">
         {{ product.name }}
       </p>
       <div class="buttons">
-          <div v-if="product.count > 0" class="crease-buttons">
-            <button @click="remove(product)" class="animated crease decrease">x</button>
-            <button @click="decrease(product)" class="animated crease decrease">
-              -
-            </button>
-            <p class="animated count">{{ product.count }}</p>
-            <button @click="crease(product)" class="crease">+</button>
-          </div>
-          <button v-else @click="crease(product)" class="crease add-button">
-            +
+        <div v-if="product.count > 0" class="crease-buttons">
+          <button
+            v-if="product.count > 0"
+            @click="decrease(product)"
+            class="animated crease decrease"
+          >
+            -
           </button>
+          <p v-if="product.count > 0" class="animated count">
+            {{ product.count }}
+          </p>
+          <button @click="crease(product)" class="crease">+</button>
+        </div>
+        <button v-else @click="crease(product)" class="crease add-button">
+          +
+        </button>
       </div>
     </div>
   </div>
@@ -27,6 +39,204 @@ export default {
   data() {
     return {
       products: [
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
+        {
+          id: 1,
+          name: "Product№1",
+          stock: 5,
+          count: 0,
+        },
         {
           id: 1,
           name: "Product№1",
@@ -53,6 +263,8 @@ export default {
 .page {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+
   .product {
     width: 100%;
     padding: 10px;
@@ -63,9 +275,32 @@ export default {
     flex-direction: column;
     border: 1px solid rgba($black, 0.3);
     height: 200px;
+    .delete {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      border: 1px solid $black;
+      width: 25px;
+      height: 25px;
+      background-color: transparent;
+      border-radius: 90px;
+      cursor: pointer !important;
+      z-index: 1;
+    }
     .name {
       width: 100%;
       flex-grow: 1;
+    }
+    .animated {
+      animation: show 0.4s forwards;
+      @keyframes show {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     }
     .buttons {
       display: flex;
@@ -74,17 +309,7 @@ export default {
       align-self: flex-end;
       height: 35px;
       width: max-content;
-      .animated {
-        animation: show 0.4s forwards;
-        @keyframes show {
-          0% {
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
-          }
-        }
-      }
+
       button {
         background-color: transparent;
         outline: none;
@@ -114,6 +339,15 @@ export default {
         }
       }
     }
+  }
+  @media screen and (max-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (max-width: 551px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 310px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 </style>
