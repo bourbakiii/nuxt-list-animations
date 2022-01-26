@@ -1,6 +1,7 @@
 <template>
   <div class="page button-page">
-    <button @mouseleave="unhover"  @mouseenter="hover" class="hover-button">
+    <div class="cursor"></div>
+    <button @mouseleave="unhover"  @mousemove.self='move' @mouseenter="hover" class="hover-button">
       HOVER ME
       <span class="hover-button__bubble"></span>
     </button>
@@ -23,7 +24,11 @@ export default {
       bubble.style.left = event.offsetX + "px";
       bubble.style.top = event.offsetY + "px";
     },
-
+    move(event){
+      let bubble = event.target.querySelector(".hover-button__bubble");
+      bubble.style.left = event.offsetX + "px";
+      bubble.style.top = event.offsetY + "px";
+    },
     unhover(event) {
       let bubble = event.target.querySelector(".hover-button__bubble");
       bubble.classList.remove("action");
@@ -37,11 +42,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page {
+  display: flex; align-items: center;justify-content: center;
   .hover-button {
-    width: 90%;
-    height: 83vh;
+    width: 30%;
+    height: 33vh;
     overflow: hidden;
     background-color: transparent;
+    border-radius: 90px;
     &__bubble {
       position: absolute;
       top: 0px;
@@ -49,7 +56,7 @@ export default {
       width: 0px;
       height: 0px;
       transform: translate(-50%, -50%);
-      background-color: red;
+      background-color: $black;
       opacity: 0.5;
         clip-path: circle();
         transition: all 1s, top 0s, left 0s;
