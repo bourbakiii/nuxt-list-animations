@@ -2,6 +2,9 @@
   <div class="wrapper">
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Placeholder</NuxtLink>
+      <div class="links">
+        <NuxtLink to='/button' class="link bebas unselectable volume">BUTTON</NuxtLink>
+      </div>
     </div>
   </div>
 </template>

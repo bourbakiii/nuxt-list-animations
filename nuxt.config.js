@@ -16,8 +16,16 @@ export default {
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
+  
+  pageTransition: {
+    name: 'switch',
+    mode: 'out-in',
+    beforeEnter (el) {
+      console.log('Before enter...');
+    }
+  },
 
+  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/scss/style.scss',
     '@/assets/scss/titles.scss',
@@ -40,7 +48,8 @@ export default {
   styleResources: {
       scss: [
         '@assets/scss/style.scss',
-        '@assets/scss/titles.scss'
+        '@assets/scss/titles.scss',
+        '@assets/scss/transitions.scss'
       ]
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

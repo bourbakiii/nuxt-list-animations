@@ -1,0 +1,13 @@
+.switch-enter,
+.switch-leave-to {
+  opacity: 0;
+}
+
+.switch-enter-active,
+.switch-leave-active {
+    transition: all 0.3s;
+}
+
+.switch-move {
+    transition: transform 0.3s;
+  }

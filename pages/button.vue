@@ -1,10 +1,6 @@
 <template>
   <div class="page button-page">
-    <button
-      @mouseleave="unhover"
-      @mouseenter="hover"
-      class="hover-button"
-    >
+    <button @mouseleave="unhover" @mouseenter="hover" class="hover-button">
       <p class="content">HOVER ME</p>
       <span class="hover-button__bubble"></span>
     </button>
@@ -34,7 +30,7 @@ export default {
         event.offsetY + "px",
       ];
     },
- 
+
     unhover(event) {
       let bubble = event.target.querySelector(".hover-button__bubble");
       bubble.classList.remove("action");
