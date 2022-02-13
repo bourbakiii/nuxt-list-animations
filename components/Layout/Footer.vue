@@ -10,8 +10,8 @@ export default {};
 
 <style lang='scss' scoped>
 .wrapper {
-  width: 100vw;
-  max-width:100vw;
+  width: 100%;
+  max-width:100%;
   height: 60px;
   background-color: $black;
   display: flex;
