@@ -1,7 +1,7 @@
 <template>
-<div class="page index-page">
-    <Product  v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
-</div>
+  <div class="page index-page">
+      <Product  v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
+  </div>
 </template>
 
 <script>
@@ -15,8 +15,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{
             count:1
           },
@@ -27,8 +27,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:2},
           is_active: true
         },
@@ -37,8 +37,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -47,8 +47,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:3},
           is_active: true
         },
@@ -57,8 +57,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -67,8 +67,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -77,8 +77,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -87,8 +87,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -97,8 +97,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -107,8 +107,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -117,8 +117,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -127,8 +127,8 @@ export default {
           name:'Product #1000000000000000000000000000001',
           price:400,
           discount_price:200,
-          step: 0.1,
-          stock: 10,
+          step: 5,
+          stock: 1000,
           pivot:{count:0},
           is_active: true
         },
@@ -148,6 +148,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss" scoped>
 .page {
   display: grid;

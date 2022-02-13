@@ -2,29 +2,34 @@
   <div class="product">
     <img src="@/assets/images/product.jpg" class="image" />
     <p class="name">{{ product.name }}</p>
-    <span class="prices">
-      <p class="price">{{ price.toFixed(2) }}<IconsRouble scale="0.6" /></p>
-      <p v-if="full_price" class="full-price">
-        {{ full_price.toFixed(2) }}<IconsRouble scale="0.6" />
-      </p>
-    </span>
-    <div class="buttons">
-      <transition name="show" appear>
-        <button
-          v-if="inCart"
-          class="crease decrease pushable-button"
-          @click="decrease"
-        >
-          <IconsMinus fill="rgba(0,0,0,.5)" />
+    <div class="main-row">
+      <span class="prices">
+        <p class="price">{{ price.toFixed(2) }}<IconsRouble scale="0.6" /></p>
+        <p v-if="full_price" class="full-price">
+          {{ full_price.toFixed(2) }}<IconsRouble scale="0.6" />
+        </p>
+      </span>
+      <div class="buttons">
+        <transition name="show" appear>
+          <button
+            v-if="inCart"
+            class="crease decrease pushable-button"
+            @click="decrease"
+          >
+            <IconsMinus fill="rgba(0,0,0,.5)" />
+          </button>
+        </transition>
+        <transition name="show" appear>
+          <p v-if="inCart" class="count">{{ count.toFixed(2) }}</p>
+        </transition>
+        <button class="add pushable-button" @click="crease">
+          <IconsPlus fill="rgba(0,0,0,.5)" />
         </button>
-      </transition>
-      <transition name="show" appear>
-      <p v-if="inCart" class="count">{{ count.toFixed(2) }}</p>
-      </transition>
-      <button class="add pushable-button" @click="crease">
-        <IconsPlus fill="rgba(0,0,0,.5)" />
-      </button>
+      </div>
     </div>
+    <p class="weight">
+      400гр.
+    </p>
   </div>
 </template>
 
@@ -65,22 +70,18 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.show-enter
-{
+.show-enter {
   opacity: 0;
   transform: translateY(-10px);
 }
-.show-enter-to{
+.show-enter-to {
   transition: all 0.2s ease;
 }
-.show-leave-to
-{
+.show-leave-to {
   transition: all 0.2s ease;
   opacity: 0;
   transform: translateY(10px);
 }
-
-
 .product {
   width: 100%;
   height: 100%;
@@ -110,49 +111,59 @@ export default {
       font-size: 16px;
     }
   }
-  .prices {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-  }
-  .buttons {
-    position: absolute;
-    bottom: 7px;
-    right: 7px;
+  .main-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    height: 30px;
-    .count {
-      padding: 0px 35px;
-      margin: 0px -30px;
-      color: rgba(black, 0.5);
-      height: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    width:100%;
+    .prices {
+      width: max-content;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-direction: column;
     }
-    .pushable-button {
-      width: 30px;
-      height: 30px;
-      border-radius: 90px;
+    .buttons {
       display: flex;
       align-items: center;
       justify-content: center;
-      outline: none;
-      border: 1px solid rgba(black, 0.2);
-      border-bottom-width: 3px;
-      background-color: transparent;
-      transition: 0.3s;
-      z-index: 1;
-      &:active {
+      border-radius: 15px;
+      height: 30px;
+      .count {
+        padding: 0px 35px;
+        margin: 0px -30px;
+        color: rgba(black, 0.5);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pushable-button {
+        width: 30px;
+        height: 30px;
+        border-radius: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
         border: 1px solid rgba(black, 0.2);
-        transform: scale(0.96);
+        border-bottom-width: 3px;
+        background-color: transparent;
+        transition: 0.3s;
+        z-index: 1;
+        &:active {
+          border: 1px solid rgba(black, 0.2);
+          transform: scale(0.96);
+        }
       }
     }
+  }
+  .weight{
+    width:100%;
+    display: flex;align-items: center;justify-content: flex-end;
+    color:rgba(0,0,0,.4);
+    font-size: 14px;
   }
 }
 </style>
