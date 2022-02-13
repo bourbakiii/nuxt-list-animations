@@ -1,6 +1,6 @@
 <template>
   <div class="page index-page">
-    <Product v-for='product in products' :key='product.id' :product='product' />
+    <Product v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
   </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{
+            count:1
+          },
           is_active: true
         },
         {
@@ -27,7 +29,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:2},
           is_active: true
         },
         {
@@ -37,7 +39,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -47,7 +49,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:3},
           is_active: true
         },
         {
@@ -57,7 +59,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -67,7 +69,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -77,7 +79,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -87,7 +89,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -97,7 +99,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -107,7 +109,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -117,7 +119,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
         {
@@ -127,7 +129,7 @@ export default {
           discount_price:200,
           step: 0.1,
           stock: 10,
-          pivot:{},
+          pivot:{count:0},
           is_active: true
         },
       ],
@@ -135,13 +137,13 @@ export default {
   },
   methods: {
     remove(product) {
-      this.$store.commit("basket/remove", product);
+      product.pivot.count = 0;
     },
     crease(product) {
-      this.$store.commit("basket/crease", product);
+      product.pivot.count = Math.min(++product.pivot.count, product.stock);
     },
     decrease(product) {
-      this.$store.commit("basket/decrease", product);
+      product.pivot.count = --product.pivot.count;
     },
   },
 };
