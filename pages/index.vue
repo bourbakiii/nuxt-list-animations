@@ -143,7 +143,7 @@ export default {
       product.pivot.count = Math.min(++product.pivot.count, product.stock);
     },
     decrease(product) {
-      product.pivot.count = --product.pivot.count;
+      product.pivot.count = Math.max(--product.pivot.count,0);
     },
   },
 };
