@@ -37,9 +37,14 @@ export default {
     styleResources: {
         scss: [
             '@assets/scss/style.scss',
-            '@assets/scss/titles.scss'
+            '@assets/scss/titles.scss',
+            '@assets/scss/transitions.scss'
         ]
     },
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {}
+    build: {},
+    pageTransition: {
+        name: 'page',
+        mode: 'out-in',
+      }
 }

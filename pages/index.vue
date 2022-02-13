@@ -1,7 +1,7 @@
 <template>
-  <div class="page index-page">
-    <Product v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
-  </div>
+<div class="page index-page">
+    <Product  v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
+</div>
 </template>
 
 <script>
@@ -163,6 +163,19 @@ export default {
   }
   @media screen and (max-width:$startmobile) {
   grid-template-columns: repeat(2, 1fr);
+  }
+  .product{
+    animation: scaled 1s forwards;
+    @keyframes scaled {
+      0%{
+        transform: scale(0.7);
+        opacity:0;
+      }
+      100%{
+        transform: scale(1);
+        opacity:1;
+      }
+    }
   }
 }
 </style>
