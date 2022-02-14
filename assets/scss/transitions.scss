@@ -1,13 +1,18 @@
-.switch-enter,
-.switch-leave-to {
-  opacity: 0;
+.page-enter,.page-leave-to{
+    opacity:0;
 }
-
-.switch-enter-active,
-.switch-leave-active {
-    transition: all 0.3s;
+.page-enter{
+    transform: translateX(-25px);
 }
-
-.switch-move {
-    transition: transform 0.3s;
-  }
+.page-leave-to{
+    transform: translateX(25px);
+}
+.page-enter-active{
+    transition: ease 0.2s;
+}
+.page-leave-active{
+    transition: ease 0.2s;
+}
+.page-move{
+    position: absolute;
+}

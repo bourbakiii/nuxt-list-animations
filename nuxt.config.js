@@ -1,55 +1,50 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'Animations',
-    htmlAttrs: {
-      lang: 'ru'
+    // Global page headers: https://go.nuxtjs.dev/config-head
+    head: {
+        title: 'Animations',
+        htmlAttrs: {
+            lang: 'ru'
+        },
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+            { hid: 'description', name: 'description', content: '' },
+            { name: 'format-detection', content: 'telephone=no' }
+        ],
+        link: [
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        ]
     },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+    // Global CSS: https://go.nuxtjs.dev/config-css
+
+    css: [
+        '@/assets/scss/style.scss',
+        '@/assets/scss/titles.scss',
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
 
-  
-  pageTransition: {
-    name: 'switch',
-    mode: 'out-in',
-  },
+    // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+    plugins: [],
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '@/assets/scss/style.scss',
-    '@/assets/scss/titles.scss',
-  ],
+    // Auto import components: https://go.nuxtjs.dev/config-components
+    components: true,
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+    // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+    buildModules: [],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+    // Modules: https://go.nuxtjs.dev/config-modules
+    modules: ['@nuxtjs/style-resources'],
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/style-resources'],
-
-  styleResources: {
-      scss: [
-        '@assets/scss/style.scss',
-        '@assets/scss/titles.scss',
-        '@assets/scss/transitions.scss'
-      ]
-  },
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+    styleResources: {
+        scss: [
+            '@assets/scss/style.scss',
+            '@assets/scss/titles.scss',
+            '@assets/scss/transitions.scss'
+        ]
+    },
+    // Build Configuration: https://go.nuxtjs.dev/config-build
+    build: {},
+    pageTransition: {
+        name: 'page',
+        mode: 'out-in',
+      }
 }

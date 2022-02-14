@@ -2,10 +2,7 @@
   <div class="wrapper">
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Placeholder</NuxtLink>
-      <div class="links">
-        <NuxtLink to='/underline' class="link bebas unselectable volume">UNDERLINE</NuxtLink>
-        <NuxtLink to='/button' class="link bebas unselectable volume">BUTTON</NuxtLink>
-      </div>
+      <NuxtLink to="/button" class="link bebas unselectable volume">Button</NuxtLink>
     </div>
   </div>
 </template>
@@ -16,8 +13,8 @@ export default {};
 
 <style lang='scss' scoped>
 .wrapper {
-  width: 100vw;
-  max-width:100vw;
+  width: 100%;
+  max-width:100%;
   height: 60px;
   display: flex;
   align-items: center;
