@@ -151,6 +151,7 @@ export default {
   flex-direction: column;
   border: 1px solid rgba(black, 0.05);
   transition: background 0.1s;
+  box-shadow: 0px 0px 10px 0.1px black;
   .delete {
     position: absolute;
     top: 10px;
@@ -161,9 +162,9 @@ export default {
     border-radius: 15px;
     width: 100%;
     object-fit: contain;
-      transition: transform 0.1s;
-    &:hover{
-      transform: scale(1.05);
+      transition: transform 0.2s;
+    &:active{
+      transform: scale(0.95);
     }
   }
   .name {
@@ -215,24 +216,10 @@ export default {
       font-size: 14px;
     }
   }
-  .pushable-button {
-    width: 30px;
+  .pushable-button{
+      width: 30px;
     height: 30px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    outline: none;
-    border: 1px solid rgba(black, 0.2);
-    border-bottom-width: 3px;
-    background-color: transparent;
-    transition: 0.1s;
-    z-index: 1;
-    &:active {
-      border: 1px solid rgba(black, 0.2);
-      transform: scale(0.96);
     }
-  }
   .buttons {
     width: 100%;
     display: flex;
@@ -241,6 +228,7 @@ export default {
     height: 30px;
     align-self: flex-end;
     margin-top: 10px;
+    
     .heart {
       position: absolute;
       left: 0px;

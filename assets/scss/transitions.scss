@@ -21,13 +21,14 @@
 .modal-enter {
     opacity: 0;
     .content {
-        transform: translateY(20vh);
+        transform: scale(0.4);
     }
 }
 .modal-leave-to {
     opacity: 0;
     .content {
-        transform: translateY(-20vh);
+        
+        transform: scale(0.4);
     }
 }
 .modal-enter-active,

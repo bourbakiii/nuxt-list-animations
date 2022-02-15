@@ -105,3 +105,20 @@ html {
 .html_overflow{
     overflow: hidden;
 }
+.pushable-button {
+    
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    border: 1px solid rgba(black, 0.2);
+    border-bottom-width: 3px;
+    background-color: transparent;
+    transition: 0.1s;
+    z-index: 1;
+    &:active {
+      border: 1px solid rgba(black, 0.2);
+      transform: scale(0.96);
+    }
+  }
