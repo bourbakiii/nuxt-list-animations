@@ -11,9 +11,8 @@ $noteL: 1440px;
 $note:1024px;
 $tablet:768px;
 $startmobile: 520px;
-$mobileL: 425px;
-$mobileM:300px;
-$mobileS:275px;
+$mobile: 425px;
+$endmobile:360px;
 * {
     margin: 0;
     padding: 0;
@@ -26,7 +25,7 @@ $mobileS:275px;
 }
 html {
     min-height: 100vh;
-    min-width: 320px;
+    min-width: 360px;
     & {
         ::-webkit-scrollbar {
             width: 0;
@@ -102,4 +101,7 @@ html {
                 0 20px 20px rgba(0, 0, 0, 0.15);
         }
     }
+}
+.html_overflow{
+    overflow: hidden;
 }

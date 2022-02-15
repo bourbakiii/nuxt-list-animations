@@ -1,6 +1,7 @@
 <template>
   <div class="page index-page">
       <Product  v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
+    <LayoutModalsProduct/>
   </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
           pivot:{
             count:1
           },
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 2,
@@ -30,7 +32,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:2},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 3,
@@ -40,7 +43,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 4,
@@ -50,7 +54,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:3},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 5,
@@ -60,7 +65,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 6,
@@ -70,7 +76,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 7,
@@ -80,7 +87,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 8,
@@ -90,7 +98,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 9,
@@ -100,7 +109,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 10,
@@ -110,7 +120,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 11,
@@ -120,7 +131,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
         {
           id: 12,
@@ -130,7 +142,8 @@ export default {
           step: 5,
           stock: 1000,
           pivot:{count:0},
-          is_active: true
+          is_active: true,
+          is_favourite: false
         },
       ],
     };
