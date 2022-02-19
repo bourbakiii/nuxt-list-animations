@@ -41,6 +41,12 @@ export default {};
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .link{
+        margin-right:5px;
+        &:last-of-type{
+          margin-right:0px;
+        }
+      }
     }
   }
 }

@@ -8,6 +8,5 @@
     .page{
         display: flex; justify-content: center !important; align-items: center !important; 
         font-size: 10vw; color: $white !important;
-        
     }
 </style>

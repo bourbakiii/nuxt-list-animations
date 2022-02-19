@@ -1,18 +1,39 @@
-.page-enter,.page-leave-to{
-    opacity:0;
+.page-enter,
+.page-leave-to {
+    opacity: 0;
 }
-.page-enter{
+.page-enter {
     transform: translateX(-25px);
 }
-.page-leave-to{
+.page-leave-to {
     transform: translateX(25px);
 }
-.page-enter-active{
+.page-enter-active {
     transition: ease 0.2s;
 }
-.page-leave-active{
+.page-leave-active {
     transition: ease 0.2s;
 }
-.page-move{
+.page-move {
     position: absolute;
+}
+
+.modal-enter {
+    opacity: 0;
+    .content {
+        transform: scale(0.4);
+    }
+}
+.modal-leave-to {
+    opacity: 0;
+    .content {
+        
+        transform: scale(0.4);
+    }
+}
+.modal-enter-active,
+.modal-leave-active {
+    &, .content{
+        transition: all 0.6s;
+    }
 }

@@ -1,17 +1,14 @@
 <template>
   <div class="layout default-layout">
-      <LayoutNavigation/>
-      <Nuxt/>
-      <LayoutFooter/>
+    <LayoutNavigation />
+      <Nuxt />
+    <LayoutFooter />
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
-
-<style>
+<style lang="scss">
 
 </style>
