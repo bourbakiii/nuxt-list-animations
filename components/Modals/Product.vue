@@ -9,7 +9,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss' scoped>
 .wrapper{
     width:100%;
     height:100%;

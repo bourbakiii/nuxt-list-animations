@@ -150,8 +150,13 @@ export default {
   justify-content: flex-start;
   flex-direction: column;
   border: 1px solid rgba(black, 0.05);
-  transition: background 0.1s;
-  box-shadow: 0px 0px 10px 0.1px black;
+  transition: background 0.1s,
+   box-shadow 0.3s;
+  box-shadow: 0px 0px 10px 0.1px rgba(black,.06);
+  &:hover{
+  box-shadow: 0px 0px 50px 0.05px rgba(black,.1);
+
+  }
   .delete {
     position: absolute;
     top: 10px;

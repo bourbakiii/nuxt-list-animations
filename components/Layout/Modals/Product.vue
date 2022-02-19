@@ -10,7 +10,7 @@
       class="modal modals-product wrapper"
     >
       <div class="content">
-        {{ product.is_favourite }}
+        {{ product.pivot.count }}
         <div class="buttons">
           <button
             class="heart action-button"
@@ -19,11 +19,11 @@
             <IconsHeart scale="1.3" />
           </button>
           <div class="action-buttons">
-            <button @click="remove" class="remove action-button">
+            <button v-if='product.pivot.count' @click="remove" class="remove action-button">
               <IconsClose scale="1.4" />
             </button>
             <div class="count-buttons">
-              <button @click="decrease" class="decrease action-button">
+              <button v-if='product.pivot.count' @click="decrease" class="decrease action-button">
                 <IconsMinus scale="1.4" />
               </button>
               <button @click="crease" class="crease action-button">
@@ -38,10 +38,25 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      product: {},
-    };
+  methods: {
+    crease() {
+      this.$store.commit("modals/action", ({ state }) => {
+        state.product.product.pivot.count=Math.min(
+          ++state.product.product.pivot.count,
+          state.product.product.stock
+        );
+      });
+    },
+    decrease() {
+      this.$store.commit("modals/action", ({ state }) => {
+        state.product.product.pivot.count=Math.max(--state.product.product.pivot.count, 0);
+      });
+    },
+    remove() {
+      this.$store.commit("modals/action", ({ state }) => {
+        state.product.product.pivot.count = 0;
+      });
+    },
   },
   computed: {
     show() {
@@ -172,10 +187,10 @@ $action_button_radius: 15px;
           .action-button {
             &:first-of-type {
               border-bottom-left-radius: $action_button_radius;
-              border-right:none;
+              border-right: none;
             }
             &:last-of-type {
-              border-left:none;
+              border-left: none;
               border-bottom-right-radius: $action_button_radius;
             }
           }
