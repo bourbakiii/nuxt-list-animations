@@ -1,13 +1,13 @@
 <template>
   <transition name="modal">
     <div
+      class="modal modals-product wrapper"
       v-if="show"
       @click.self="
         $store.commit('modals/close', {
           modal_name: 'product',
         })
       "
-      class="modal modals-product wrapper"
     >
       <div class="content">
         <div class="information-wrapper">
@@ -16,11 +16,20 @@
           </div>
           <div class="information">
             <p class="name">{{ product.name }}</p>
-            <p class="description">{{product.description}}</p>
+            <p class="description">{{ product.description }}</p>
+            <div class="options">
+              <span class="prices">
+                <p v-if="true" class="full_price">{{ full_price }}</p>
+                <p class="price">
+                  {{ price }}
+                </p>
+              </span>
+            </div>
           </div>
         </div>
         <div class="buttons">
           <button
+          @click='favourite'
             class="heart action-button"
             :class="{ active: product.is_favourite }"
           >
@@ -28,7 +37,7 @@
           </button>
           <div class="action-buttons">
             <transition name="action" mode="out-in">
-              <div v-if="product.pivot.count" class="optional-block">
+              <div v-if="count" class="optional-block">
                 <button
                   v-if="product.pivot.count"
                   @click="remove"
@@ -39,7 +48,7 @@
                 <button @click="decrease" class="decrease action-button">
                   <IconsMinus scale="1.4" />
                 </button>
-                <span class="count">{{ product.pivot.count }}</span>
+                <span class="count">{{ count }}</span>
               </div>
             </transition>
             <button @click="crease" class="crease action-button">
@@ -54,6 +63,11 @@
 <script>
 export default {
   methods: {
+    favourite() {
+      this.$store.commit("modals/action", ({ state }) => {
+        state.product.product.is_favourite = !state.product.product.is_favourite;
+     });
+    },
     crease() {
       this.$store.commit("modals/action", ({ state }) => {
         state.product.product.pivot.count = Math.min(
@@ -82,6 +96,15 @@ export default {
     },
     product() {
       return this.$store.state.modals.product.product ?? {};
+    },
+    price() {
+      return this.product.discount_price ?? this.product.price;
+    },
+    full_price() {
+      return this.product.discount_price ? this.product.price : null;
+    },
+    count() {
+      return this.product.pivot.count * this.product.step ?? this.product.step;
     },
   },
 };
@@ -126,27 +149,29 @@ $action_button_radius: 15px;
     width: 100%;
     background-color: $white;
     min-height: 500px;
+    height: auto;
     max-width: 1200px;
     .information-wrapper {
       width: 100%;
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+      align-items: center;
+      justify-content:center;
       flex-direction: row;
-      height: 500px;
-      @media screen and (max-width:$tablet) {
+      min-height: 100%;
+      height: auto;
+      @media screen and (max-width: $tablet) {
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
-        
       }
       .image-wrapper {
         height: 100%;
         margin-right: 10px;
-        max-width: 40%;
-      @media screen and (max-width:$tablet) {
-        margin-bottom: 10px;
-      }
+        width: 25%;
+        flex-shrink: 0;
+        @media screen and (max-width: $tablet) {
+          margin-bottom: 10px;
+        }
         .image {
           width: 100%;
           height: 100%;
@@ -154,28 +179,22 @@ $action_button_radius: 15px;
         }
       }
       .information {
-        flex-grow: 1;
-        height: 100%;
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        flex-direction: column;
-        padding: 10px;
-        border-radius: 15px;
-        .name{
-          font-size: 20px;
-          width:100%;
+        height:100%;
+        .name {
+          font-size: 30px;
+          width: 100%;
           height: max-content;
         }
-        .description{
-          margin:10px 0px;
-          height:auto;
-          color:rgba(0,0,0,.8);
+        .description {
+          margin: 10px 0px;
+          height: auto;
+          color: rgba(0, 0, 0, 0.8);
           word-break: keep-all;
+          flex-grow: 1;
+          height:100%;
         }
       }
     }
-
     .buttons {
       z-index: 2;
       position: absolute;
@@ -197,8 +216,10 @@ $action_button_radius: 15px;
         margin: 0px 10px;
         width: max-content;
         height: 40px;
-        width:40px;
-        display: flex;align-items: center;justify-content: center;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: white;
         padding: 0px 20px;
         border-radius: 90px;

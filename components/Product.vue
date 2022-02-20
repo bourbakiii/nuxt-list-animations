@@ -198,6 +198,7 @@ export default {
     -webkit-line-clamp:2;
     -webkit-box-orient: vertical;
     box-orient: vertical;
+    width:100%;
     @media screen and (max-width: 625px) {
       font-size: 14.5px;
       font-weight: lighter;
