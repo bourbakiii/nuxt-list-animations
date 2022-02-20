@@ -16,6 +16,7 @@
           </div>
           <div class="information">
             <p class="name">{{ product.name }}</p>
+            <p class="description">{{product.description}}</p>
           </div>
         </div>
         <div class="buttons">
@@ -129,13 +130,23 @@ $action_button_radius: 15px;
     .information-wrapper {
       width: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       flex-direction: row;
       height: 500px;
+      @media screen and (max-width:$tablet) {
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        
+      }
       .image-wrapper {
         height: 100%;
         margin-right: 10px;
+        max-width: 40%;
+      @media screen and (max-width:$tablet) {
+        margin-bottom: 10px;
+      }
         .image {
           width: 100%;
           height: 100%;
@@ -151,6 +162,17 @@ $action_button_radius: 15px;
         flex-direction: column;
         padding: 10px;
         border-radius: 15px;
+        .name{
+          font-size: 20px;
+          width:100%;
+          height: max-content;
+        }
+        .description{
+          margin:10px 0px;
+          height:auto;
+          color:rgba(0,0,0,.8);
+          word-break: keep-all;
+        }
       }
     }
 
