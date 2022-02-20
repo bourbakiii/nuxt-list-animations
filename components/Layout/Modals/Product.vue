@@ -11,7 +11,9 @@
     >
       <div class="content">
         <div class="information-wrapper">
-          <img :src="product.image" alt="" class="image" />
+          <div class="image-wrapper">
+            <img :src="product.image" alt="" class="image" />
+          </div>
           <div class="information">
             <p class="name">{{ product.name }}</p>
           </div>
@@ -24,19 +26,24 @@
             <IconsHeart scale="1.3" />
           </button>
           <div class="action-buttons">
-            <!-- v-if='product.pivot.count' -->
-            <button @click="remove" class="remove action-button">
-              <IconsClose scale="1.4" />
+            <transition name="action" mode="out-in">
+              <div v-if="product.pivot.count" class="optional-block">
+                <button
+                  v-if="product.pivot.count"
+                  @click="remove"
+                  class="remove action-button"
+                >
+                  <IconsClose scale="1.4" />
+                </button>
+                <button @click="decrease" class="decrease action-button">
+                  <IconsMinus scale="1.4" />
+                </button>
+                <span class="count">{{ product.pivot.count }}</span>
+              </div>
+            </transition>
+            <button @click="crease" class="crease action-button">
+              <IconsPlus scale="1.4" />
             </button>
-            <div class="count-buttons">
-              <!-- v-if='product.pivot.count' -->
-              <button @click="decrease" class="decrease action-button">
-                <IconsMinus scale="1.4" />
-              </button>
-              <button @click="crease" class="crease action-button">
-                <IconsPlus scale="1.4" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -80,6 +87,20 @@ export default {
 </script>
 <style lang="scss" scoped>
 $action_button_radius: 15px;
+.action-enter {
+  opacity: 0;
+  transform: scale(0.2) translateY(60px);
+}
+.action-leave-to {
+  opacity: 0;
+}
+.action-enter-active,
+.action-leave-active {
+  transition: all 0.5s ease;
+}
+.action-move {
+  position: absolute;
+}
 .wrapper {
   width: 100%;
   height: 100%;
@@ -92,6 +113,7 @@ $action_button_radius: 15px;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.3);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -103,7 +125,35 @@ $action_button_radius: 15px;
     width: 100%;
     background-color: $white;
     min-height: 500px;
-    max-width: 900px;
+    max-width: 1200px;
+    .information-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      height: 500px;
+      .image-wrapper {
+        height: 100%;
+        margin-right: 10px;
+        .image {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+      .information {
+        flex-grow: 1;
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-direction: column;
+        padding: 10px;
+        border-radius: 15px;
+      }
+    }
+
     .buttons {
       z-index: 2;
       position: absolute;
@@ -114,6 +164,24 @@ $action_button_radius: 15px;
       align-items: flex-start;
       justify-content: space-between;
       height: 53px;
+      .optional-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        height: 100%;
+      }
+      .count {
+        margin: 0px 10px;
+        width: max-content;
+        height: 40px;
+        width:40px;
+        display: flex;align-items: center;justify-content: center;
+        background-color: white;
+        padding: 0px 20px;
+        border-radius: 90px;
+        transform: tra;
+      }
       .action-button {
         display: flex;
         align-items: center;
@@ -132,6 +200,7 @@ $action_button_radius: 15px;
         font-size: 20px;
         padding: 5px;
         transition: 0.5s ease;
+
         &:active {
           transition: 0.08s;
           padding-top: 9px !important;
@@ -139,6 +208,7 @@ $action_button_radius: 15px;
           border-bottom: 4px solid rgba(0, 0, 0, 0.4);
           border-radius: $action_button_radius;
           transform: rotate3d(10deg 10deg 10deg);
+          background-color: rgba(235, 235, 235);
         }
       }
       .heart {
