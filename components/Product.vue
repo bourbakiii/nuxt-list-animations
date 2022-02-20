@@ -1,20 +1,22 @@
 <template>
   <div class="product">
-    <img
-      @click="
-        $store.commit('modals/open', {
-          modal_name: 'product',
-          product: product,
-        })
-      "
-      src="@/assets/images/product.jpg"
-      class="image"
-    />
+    <div class="image-wrapper">
+      <img
+        @click="
+          $store.commit('modals/open', {
+            modal_name: 'product',
+            product: product,
+          })
+        "
+        :src="product.image"
+        class="image"
+      />
+    </div>
     <transition name="button-appear">
       <button
         @click="product.pivot.count = 0"
-        class="pushable-button delete"
         v-if="product.pivot.count"
+        class="pushable-button delete"
       >
         <IconsClose />
       </button>
@@ -85,7 +87,7 @@ export default {
       return this.product.discount_price ?? this.product.price;
     },
     full_price() {
-      return this.product.price;
+      return this.product.discount_price ? this.product.price : null;
     },
     count() {
       return this.product.pivot.count * this.product.step ?? this.product.step;
@@ -140,6 +142,7 @@ export default {
 .product {
   width: 100%;
   height: 100%;
+  max-height: 500px;
   border-radius: 6px;
   border: 0.1px solid rgba(white, 0.1);
   background-color: white;
@@ -150,38 +153,54 @@ export default {
   justify-content: flex-start;
   flex-direction: column;
   border: 1px solid rgba(black, 0.05);
-  transition: background 0.1s,
-   box-shadow 0.3s;
-  box-shadow: 0px 0px 10px 0.1px rgba(black,.06);
-  &:hover{
-  box-shadow: 0px 0px 50px 0.05px rgba(black,.1);
-
+  transition: background 0.1s, box-shadow 0.3s;
+  box-shadow: 0px 0px 10px 0.1px rgba(black, 0.06);
+  &:hover {
+    box-shadow: 0px 0px 50px 0.05px rgba(black, 0.1);
   }
   .delete {
     position: absolute;
     top: 10px;
     right: 10px;
   }
-  .image {
-    cursor: pointer;
+  .image-wrapper {
     border-radius: 15px;
     width: 100%;
-    object-fit: contain;
+    max-width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .image {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      object-fit: contain;
       transition: transform 0.2s;
-    &:active{
-      transform: scale(0.95);
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
+
   .name {
     max-width: 100%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    margin: 10px 0px;
+    height: max-content;
+    margin-top: auto;
+    word-break: break-word;
     overflow: hidden;
-    text-align: center;
-    height: 60%;
-    margin: 10px;
-    @media screen and (max-width: 425px) {
-      font-size: 16px;
+    text-overflow: ellipsis;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    @media screen and (max-width: 625px) {
+      font-size: 14.5px;
+      font-weight: lighter;
     }
   }
   .main-row {
@@ -190,6 +209,7 @@ export default {
     justify-content: space-between;
     flex-direction: row;
     width: 100%;
+    flex-shrink: 0;
     .prices {
       width: max-content;
       display: flex;
@@ -221,10 +241,10 @@ export default {
       font-size: 14px;
     }
   }
-  .pushable-button{
-      width: 30px;
+  .pushable-button {
+    width: 30px;
     height: 30px;
-    }
+  }
   .buttons {
     width: 100%;
     display: flex;
@@ -233,7 +253,7 @@ export default {
     height: 30px;
     align-self: flex-end;
     margin-top: 10px;
-    
+
     .heart {
       position: absolute;
       left: 0px;

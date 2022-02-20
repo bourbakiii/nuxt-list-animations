@@ -10,7 +10,12 @@
       class="modal modals-product wrapper"
     >
       <div class="content">
-        {{ product.pivot.count }}
+        <div class="information-wrapper">
+          <img :src="product.image" alt="" class="image" />
+          <div class="information">
+            <p class="name">{{ product.name }}</p>
+          </div>
+        </div>
         <div class="buttons">
           <button
             class="heart action-button"
@@ -19,11 +24,13 @@
             <IconsHeart scale="1.3" />
           </button>
           <div class="action-buttons">
-            <button v-if='product.pivot.count' @click="remove" class="remove action-button">
+            <!-- v-if='product.pivot.count' -->
+            <button @click="remove" class="remove action-button">
               <IconsClose scale="1.4" />
             </button>
             <div class="count-buttons">
-              <button v-if='product.pivot.count' @click="decrease" class="decrease action-button">
+              <!-- v-if='product.pivot.count' -->
+              <button @click="decrease" class="decrease action-button">
                 <IconsMinus scale="1.4" />
               </button>
               <button @click="crease" class="crease action-button">
@@ -41,7 +48,7 @@ export default {
   methods: {
     crease() {
       this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.pivot.count=Math.min(
+        state.product.product.pivot.count = Math.min(
           ++state.product.product.pivot.count,
           state.product.product.stock
         );
@@ -49,7 +56,10 @@ export default {
     },
     decrease() {
       this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.pivot.count=Math.max(--state.product.product.pivot.count, 0);
+        state.product.product.pivot.count = Math.max(
+          --state.product.product.pivot.count,
+          0
+        );
       });
     },
     remove() {
@@ -117,7 +127,6 @@ $action_button_radius: 15px;
         border-radius: $action_button_radius;
         border-top-left-radius: 0px !important;
         border-top-right-radius: 0px !important;
-
         border-bottom: 9px solid rgba(0, 0, 0, 0.3);
         height: 100%;
         font-size: 20px;

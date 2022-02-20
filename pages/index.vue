@@ -1,151 +1,51 @@
 <template>
   <div class="page index-page">
-      <Product  v-for='product in products' :inCart='!!product.pivot.count' @remove='remove(product)' @decrease='decrease(product)' @crease='crease(product)' :key='product.id' :product='product' />
-    <LayoutModalsProduct/>
+    <Product
+      :key="product.id"
+      :product="product"
+      v-for="product in products"
+      :inCart="!!product.pivot.count"
+      @remove="remove(product)"
+      @decrease="decrease(product)"
+      @crease="crease(product)"
+    />
+    <LayoutModalsProduct />
   </div>
 </template>
 
 <script>
 export default {
   name: "IndexPage",
+  async asyncData({ $axios }) {
+    let products = [];
+    let loading = true;
+    await $axios
+      .get("/products")
+      .then(({ data }) => {
+        data.forEach((element) => {
+          Object.assign(element, {
+            name: element.title,
+            stock: 100,
+            step: 1,
+            pivot: {
+              count: 0,
+            },
+            is_favourite: false
+          });
+          delete element.title;
+        });
+        products = data;
+      })
+      .finally(() => {
+        loading = false;
+      });
+    // !_! Вывод ошибки
+    // .catch(json=>console.log(json))
+    return { products, loading };
+  },
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{
-            count:1
-          },
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 2,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:2},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 3,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 4,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:3},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 5,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 6,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 7,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 8,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 9,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 10,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 11,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-        {
-          id: 12,
-          name:'Product #1000000000000000000000000000001',
-          price:400,
-          discount_price:200,
-          step: 5,
-          stock: 1000,
-          pivot:{count:0},
-          is_active: true,
-          is_favourite: false
-        },
-      ],
+      products: [],
     };
   },
   methods: {
@@ -156,7 +56,7 @@ export default {
       product.pivot.count = Math.min(++product.pivot.count, product.stock);
     },
     decrease(product) {
-      product.pivot.count = Math.max(--product.pivot.count,0);
+      product.pivot.count = Math.max(--product.pivot.count, 0);
     },
   },
 };
@@ -166,28 +66,28 @@ export default {
 .page {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-gap:20px;
-  @media screen and (max-width:$note) {
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap:11px;
+  grid-gap: 20px;
+  @media screen and (max-width: $note) {
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 11px;
   }
-  @media screen and (max-width:$tablet) {
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap:8px;
+  @media screen and (max-width: $tablet) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 8px;
   }
-  @media screen and (max-width:$startmobile) {
-  grid-template-columns: repeat(2, 1fr);
+  @media screen and (max-width: $startmobile) {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .product{
+  .product {
     animation: scaled 1s forwards;
     @keyframes scaled {
-      0%{
+      0% {
         transform: scale(0.7);
-        opacity:0;
+        opacity: 0;
       }
-      100%{
+      100% {
         transform: scale(1);
-        opacity:1;
+        opacity: 1;
       }
     }
   }
