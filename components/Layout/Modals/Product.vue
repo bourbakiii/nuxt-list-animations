@@ -19,17 +19,27 @@
             <p class="description">{{ product.description }}</p>
             <div class="options">
               <span class="prices">
-                <p v-if="true" class="full_price">{{ full_price }}</p>
-                <p class="price">
-                  {{ price }}
+                <p v-if="true" class="full-price">
+                  {{ full_price }}1000<IconsRouble scale="0.63" />
                 </p>
+                <p class="price">{{ price }}<IconsRouble scale="0.8" /></p>
               </span>
+              <div class="stars">
+                <span class="rate">{{product.rating.rate}} <span class="count">
+                  ({{product.rating.count}})
+                  </span> </span> 
+                <!-- <span class="star" id="1"></span>
+                <span class="star" id="2"></span>
+                <span class="star" id="3"></span>
+                <span class="star" id="4"></span>
+                <span class="star" id="5"></span> -->
+              </div>
             </div>
           </div>
         </div>
         <div class="buttons">
           <button
-          @click='favourite'
+            @click="favourite"
             class="heart action-button"
             :class="{ active: product.is_favourite }"
           >
@@ -65,8 +75,9 @@ export default {
   methods: {
     favourite() {
       this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.is_favourite = !state.product.product.is_favourite;
-     });
+        state.product.product.is_favourite =
+          !state.product.product.is_favourite;
+      });
     },
     crease() {
       this.$store.commit("modals/action", ({ state }) => {
@@ -111,20 +122,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 $action_button_radius: 15px;
-.action-enter {
-  opacity: 0;
-  transform: scale(0.2) translateY(60px);
-}
-.action-leave-to {
-  opacity: 0;
-}
-.action-enter-active,
-.action-leave-active {
-  transition: all 0.5s ease;
-}
-.action-move {
-  position: absolute;
-}
+
 .wrapper {
   width: 100%;
   height: 100%;
@@ -137,7 +135,7 @@ $action_button_radius: 15px;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
   &::-webkit-scrollbar {
     display: none;
   }
@@ -151,18 +149,22 @@ $action_button_radius: 15px;
     min-height: 500px;
     height: auto;
     max-width: 1200px;
+      @media screen and (max-width: $tablet) {
+        height: auto;
+        min-height: auto;
+      }
     .information-wrapper {
-      width: 100%;
       display: flex;
       align-items: center;
-      justify-content:center;
+      justify-content: center;
       flex-direction: row;
-      min-height: 100%;
-      height: auto;
+      width: 100%;
+        height:100%;
       @media screen and (max-width: $tablet) {
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
+        height:max-content;
       }
       .image-wrapper {
         height: 100%;
@@ -170,7 +172,10 @@ $action_button_radius: 15px;
         width: 25%;
         flex-shrink: 0;
         @media screen and (max-width: $tablet) {
-          margin-bottom: 10px;
+          margin: 0px 0px 10px 0px;
+          min-width: 30%;
+        height: auto;
+
         }
         .image {
           width: 100%;
@@ -179,11 +184,18 @@ $action_button_radius: 15px;
         }
       }
       .information {
-        height:100%;
+        flex-grow: 1;
+      @media screen and (max-width: $tablet) {
+        height:max-content;
+        flex-grow: 0;
+      }
         .name {
-          font-size: 30px;
+          font-size: 28px;
           width: 100%;
           height: max-content;
+          @media screen and (max-width: $startmobile) {
+            font-size: 24px;
+          }
         }
         .description {
           margin: 10px 0px;
@@ -191,7 +203,52 @@ $action_button_radius: 15px;
           color: rgba(0, 0, 0, 0.8);
           word-break: keep-all;
           flex-grow: 1;
-          height:100%;
+        }
+        .options {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-direction: row;
+          width: 100%;
+          .prices {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            .price {
+              font-size: 24px;
+              font-weight: 1000;
+            }
+            .full-price {
+              font-size: 18px;
+              color: black;
+              opacity: 0.4;
+              fill: black;
+              &::before {
+                position: absolute;
+                top: 50%;
+                left: 0px;
+                width: 100%;
+                height: 1px;
+                content: "";
+                background-color: black;
+              }
+            }
+          }
+          .stars {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .rate{
+              display: flex;align-items: center;justify-content: center;flex-direction: column;
+              font-size: 30px;
+              .count{
+                transform: translateY(-5px);
+                font-size: 14px;
+                color: rgba(0,0,0,.5);
+              }
+            }
+          }
         }
       }
     }
@@ -223,7 +280,8 @@ $action_button_radius: 15px;
         background-color: white;
         padding: 0px 20px;
         border-radius: 90px;
-        transform: tra;
+        border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+        color:rgba(0,0,0,.6);
       }
       .action-button {
         display: flex;
@@ -300,12 +358,16 @@ $action_button_radius: 15px;
         align-items: flex-start;
         justify-content: flex-end;
         flex-direction: row;
+        .remove{
+          transform: translateX(1px);
+          }
         .count-buttons {
           height: 100%;
           display: flex;
           align-items: flex-start;
           justify-content: flex-end;
           flex-direction: row;
+          
           .action-button {
             &:first-of-type {
               border-bottom-left-radius: $action_button_radius;
@@ -320,5 +382,19 @@ $action_button_radius: 15px;
       }
     }
   }
+}
+.action-enter {
+  opacity: 0;
+  transform: scale(0.2) translateY(60px);
+}
+.action-leave-to {
+  opacity: 0;
+}
+.action-enter-active,
+.action-leave-active {
+  transition: all 0.5s ease;
+}
+.action-move {
+  position: absolute;
 }
 </style>
