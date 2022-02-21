@@ -25,7 +25,8 @@
     <div class="main-row">
       <span class="prices">
         <p v-if="full_price" class="full-price">
-          {{ full_price.toFixed(2) }}<IconsRouble scale="0.4" />
+          <!-- {{ +full_price.toFixed(2) }} -->
+          100<IconsRouble scale="0.525" />
         </p>
         <p class="price">{{ price.toFixed(2) }}<IconsRouble scale="0.53" /></p>
       </span>
@@ -87,6 +88,7 @@ export default {
       return this.product.discount_price ?? this.product.price;
     },
     full_price() {
+      return true;
       return this.product.discount_price ? this.product.price : null;
     },
     count() {
@@ -175,6 +177,7 @@ export default {
     .image {
       width: 100%;
       height: 100%;
+      max-height:285px;
       cursor: pointer;
       object-fit: contain;
       transition: transform 0.2s;
@@ -186,12 +189,12 @@ export default {
 
   .name {
     max-width: 100%;
-    margin: 10px 0px;
     height: max-content;
     margin-top: auto;
     word-break: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 15px 0px 10px;
     display: -moz-box;
     -moz-box-orient: vertical;
     display: -webkit-box;
@@ -199,6 +202,9 @@ export default {
     -webkit-box-orient: vertical;
     box-orient: vertical;
     width:100%;
+    font-size: 16px;
+    height: 32px;
+    line-height: 16px;
     @media screen and (max-width: 625px) {
       font-size: 14.5px;
       font-weight: lighter;
@@ -219,7 +225,7 @@ export default {
       flex-direction: column;
       white-space: nowrap;
       .full-price {
-        font-size: 12px;
+        font-size: 14px;
         color: black;
         opacity: 0.4;
         fill: black;
