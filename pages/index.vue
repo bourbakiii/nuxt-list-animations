@@ -4,7 +4,7 @@
       :key="product.id"
       :product="product"
       v-for="product in products"
-      :inCart="!!product.pivot.count"
+      :inCart="product.pivot.count"
       @remove="remove(product)"
       @decrease="decrease(product)"
       @crease="crease(product)"
@@ -39,7 +39,7 @@ export default {
       .finally(() => {
         loading = false;
       });
-    // !_! Вывод ошибки
+    // TODO !_! Вывод ошибки
     // .catch(json=>console.log(json))
     return { products, loading };
   },
@@ -65,18 +65,15 @@ export default {
 <style lang="scss" scoped>
 .page {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 20px;
-  @media screen and (max-width: $note) {
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 11px;
+  grid-template-columns: repeat(auto-fit, minMax(250px, 1fr));
+  grid-gap: 10px;
+   @media screen and (max-width: $note) {
+  grid-template-columns: repeat(auto-fit, minMax(220px, 1fr));
   }
   @media screen and (max-width: $tablet) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 8px;
+  grid-template-columns: repeat(auto-fit, minMax(145px, 1fr));
   }
   @media screen and (max-width: $startmobile) {
-    grid-template-columns: repeat(2, 1fr);
   }
   .product {
     animation: scaled 1s forwards;
