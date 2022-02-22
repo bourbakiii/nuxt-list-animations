@@ -23,12 +23,12 @@ export const mutations = {
     },
     decrease(state, product) {
         product.pivot.count = Math.max(--product.pivot.count, 0);
-        state.products.filter(element=>element.pivot.count>0);
+        state.products = state.products.filter(element=>element.pivot.count>0);
         save_at_local({ name: 'basket', value: JSON.stringify(state) });
     },
     remove(state, product) {
         product.pivot.count = 0;
-        state.products.filter(element=>element.pivot.count>0);
+        state.products = state.products.filter(element=>element.pivot.count>0);
         save_at_local({ name: 'basket', value: JSON.stringify(state) });
     },
     action(state, action) {

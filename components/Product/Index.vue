@@ -32,7 +32,7 @@
       <transition name="button-appear">
         <button
           :class="{ active: product.is_favourite }"
-          @click="product.is_favourite = !product.is_favourite"
+          @click="add_favourite"
           class="heart pushable-button"
         >
           <IconsHeart />
@@ -78,6 +78,10 @@ export default {
         this.$store.state.basket.products[index].pivot.count;
   },
   methods: {
+    add_favourite(){
+      // !!! Добавить стейт-фавориты
+      // this.product.is_favourite = !this.product.is_favourite;
+    },
     remove() {
       this.$store.commit("basket/remove", this.product);
     },

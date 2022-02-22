@@ -1,8 +1,11 @@
 <template>
-  <div class="page baket-page">
-      <div class="products">
+  <div class="page basket-page">
+    <transition name='switch' appear>
+      <div v-if='basket_products.length' class="products">
         <ProductBasket v-for='product in basket_products' :product='product' :key='product.id'/>
       </div>
+      <div v-else class='empty'>Ваша корзина пуста</div>
+    </transition>
   </div>
 </template>
 
@@ -18,6 +21,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.switch{
+  &-enter,&-leave-to{
+  opacity: 0;
+
+  }
+  &-enter-active,&-leave-active{
+    transition: all 1s;
+  }
+}
 .page {
   flex-grow: 1;
 }

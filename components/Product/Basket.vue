@@ -1,62 +1,20 @@
 <template>
-  <div class="product">
-    <div class="image-wrapper">
-      <img
-        @click="
-          $store.commit('modals/open', {
-            modal_name: 'product',
-            product: product,
-          })
-        "
-        :src="product.image"
-        class="image"
-      />
-    </div>
-    <transition name="button-appear">
-      <button
-        @click="product.pivot.count = 0"
-        v-if="product.pivot.count"
-        class="pushable-button delete"
-      >
-        <IconsClose />
-      </button>
-    </transition>
-    <p class="name">{{ product.name }}</p>
-    <div class="main-row">
+  <div class="basket-product product">
+    <img :src="product.image" alt="Product Image" class="image" />
+    <div class="middle-content">
+      <p class="name">{{ product.name }}</p>
       <span class="prices">
-        <p v-if="full_price" class="full-price">
-          <!-- {{ +full_price.toFixed(2) }} -->
-          100<IconsRouble scale="0.525" />
+        <p class="price">{{ price }}<IconsRouble scale="0.72" /></p>
+        <p v-if="!!!full_price" class="full-price">
+          {{ full_price }}1000<IconsRouble scale="0.56" />
         </p>
-        <p class="price">{{ price.toFixed(2) }}<IconsRouble scale="0.53" /></p>
       </span>
-      <p class="weight">400гр.</p>
     </div>
     <div class="buttons">
-      <transition name="button-appear">
-        <button
-          :class="{ active: product.is_favourite }"
-          @click="product.is_favourite = !product.is_favourite"
-          class="heart pushable-button"
-        >
-          <IconsHeart />
-        </button>
-      </transition>
-      <transition name="show">
-        <button
-          v-if="inCart"
-          class="crease decrease pushable-button"
-          @click="decrease"
-        >
-          <IconsMinus fill="rgba(0,0,0,.5)" />
-        </button>
-      </transition>
-      <transition name="show" appear>
-        <p v-if="inCart" class="count">{{ count.toFixed(2) }}</p>
-      </transition>
-      <button class="add pushable-button" @click="crease">
-        <IconsPlus fill="rgba(0,0,0,.5)" />
-      </button>
+      <button @click="remove" class="remove pushable-button"><IconsClose scale='1.2' /></button>
+      <button @click="decrease" class="decrease pushable-button"><IconsMinus scale='1.2' /></button>
+      <p class="count">{{product.pivot.count}}</p>
+      <button @click='crease' class="crease pushable-button"><IconsPlus  scale='1.2'/></button>
     </div>
   </div>
 </template>
@@ -67,20 +25,20 @@ export default {
     product: {
       required: true,
     },
-    inCart: {
-      require: true,
-      default: false,
-    },
   },
   methods: {
-    crease() {
-      this.$emit("crease");
-    },
-    decrease() {
-      this.$emit("decrease");
+    add_favourite(){
+      // !!! Добавить стейт-фавориты
+      // this.product.is_favourite = !this.product.is_favourite;
     },
     remove() {
-      this.$emit("remove");
+      this.$store.commit("basket/remove", this.product);
+    },
+    crease() {
+      this.$store.commit("basket/crease", this.product);
+    },
+    decrease() {
+      this.$store.commit("basket/decrease", this.product);
     },
   },
   computed: {
@@ -88,7 +46,6 @@ export default {
       return this.product.discount_price ?? this.product.price;
     },
     full_price() {
-      return true;
       return this.product.discount_price ? this.product.price : null;
     },
     count() {
@@ -99,6 +56,81 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.basket-product {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 15px;
+  flex-shrink: 0;
+  min-height: 120px;
+  margin-bottom: 10px;
+  &:last-of-type {
+    margin-bottom: 0px;
+  }
+  .image {
+    width: 100px;
+    max-height: 100px;
+    margin-right: 5%;
+    object-fit: contain;
+  }
+  .middle-content {
+    flex-grow: 1;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    .name {
+      text-align: left;
+      width: 100%;
+    }
+    .prices {
+      margin-top: 10px;
+      width: max-content;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      .full-price {
+        margin-left: 20px;
+        width: max-content;
+        font-size: 16px;
+        color: black;
+        opacity: 0.4;
+        fill: black;
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: 0px;
+          width: 100%;
+          height: 1px;
+          content: "";
+          background-color: black;
+        }
+      }
+    }
+  }
+  .buttons{
+    flex-shrink: 0;
+    display: flex;align-items: center;justify-content: center;
+    .pushable-button{
+      width:40px;
+      height:40px;
+      &.remove{
+        margin-right:10px;
+      }
+    }
+    .count{
+      margin:0px 10px;
+    }
+  }
+}
+
 .button-appear-appear {
   transform: rotate(-200deg);
 }
@@ -137,178 +169,5 @@ export default {
   transition: all 0.2s ease;
   opacity: 0;
   transform: translateY(10px);
-}
-* {
-  text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
-}
-.product {
-  width: 100%;
-  height: 100%;
-  max-height: 500px;
-  border-radius: 6px;
-  border: 0.1px solid rgba(white, 0.1);
-  background-color: white;
-  padding: 7px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  border: 1px solid rgba(black, 0.05);
-  transition: background 0.1s, box-shadow 0.3s;
-  box-shadow: 0px 0px 10px 0.1px rgba(black, 0.06);
-  &:hover {
-    box-shadow: 0px 0px 50px 0.05px rgba(black, 0.1);
-  }
-  .delete {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
-  .image-wrapper {
-    border-radius: 15px;
-    width: 100%;
-    max-width: 100%;
-    height: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    .image {
-      width: 100%;
-      height: 100%;
-      max-height:285px;
-      cursor: pointer;
-      object-fit: contain;
-      transition: transform 0.2s;
-      &:active {
-        transform: scale(0.95);
-      }
-    }
-  }
-
-  .name {
-    max-width: 100%;
-    height: max-content;
-    margin-top: auto;
-    word-break: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 15px 0px 10px;
-    display: -moz-box;
-    -moz-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient: vertical;
-    box-orient: vertical;
-    width:100%;
-    font-size: 16px;
-    height: 32px;
-    line-height: 16px;
-    @media screen and (max-width: 625px) {
-      font-size: 14.5px;
-      font-weight: lighter;
-    }
-  }
-  .main-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    width: 100%;
-    flex-shrink: 0;
-    .prices {
-      width: max-content;
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      flex-direction: column;
-      white-space: nowrap;
-      .full-price {
-        font-size: 14px;
-        color: black;
-        opacity: 0.4;
-        fill: black;
-        &::before {
-          position: absolute;
-          top: 50%;
-          left: 0px;
-          width: 100%;
-          height: 1px;
-          content: "";
-          background-color: black;
-        }
-      }
-    }
-    .weight {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      color: rgba(0, 0, 0, 0.4);
-      font-size: 14px;
-    }
-  }
-  .pushable-button {
-    width: 30px;
-    height: 30px;
-  }
-  .buttons {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 30px;
-    align-self: flex-end;
-    margin-top: 10px;
-
-    .heart {
-      position: absolute;
-      left: 0px;
-      transition: 0.2s;
-      fill: rgba(0, 0, 0, 0.4);
-      svg {
-        animation: disactivate 0.2s forwards;
-        @keyframes disactivate {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(0.85);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-      }
-      justify-self: flex-start;
-      &.active {
-        svg {
-          animation: activate 0.2s forwards;
-          @keyframes activate {
-            0% {
-              transform: scale(1);
-            }
-            50% {
-              transform: scale(1.15);
-            }
-            100% {
-              fill: $red;
-              transform: scale(1);
-            }
-          }
-          fill: $red;
-        }
-      }
-    }
-    .count {
-      padding: 0px 35px;
-      margin: 0px -30px;
-      color: rgba(black, 0.5);
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
 }
 </style>
