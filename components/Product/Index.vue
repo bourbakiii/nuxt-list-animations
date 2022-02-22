@@ -72,8 +72,10 @@ export default {
     let index = this.$store.state.basket.products
       .map((el) => +el.id)
       .indexOf(+this.product.id);
-      console.log(index);
-    if (index>=0) this.product.pivot.count = this.$store.state.basket.products[index].pivot.count;
+    console.log(index);
+    if (index >= 0)
+      this.product.pivot.count =
+        this.$store.state.basket.products[index].pivot.count;
   },
   methods: {
     remove() {
