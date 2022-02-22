@@ -25,9 +25,10 @@
                 <p class="price">{{ price }}<IconsRouble scale="0.8" /></p>
               </span>
               <div class="stars">
-                <span class="rate">{{product.rating.rate}} <span class="count">
-                  ({{product.rating.count}})
-                  </span> </span> 
+                <span class="rate"
+                  >{{ product.rating.rate }}
+                  <span class="count"> ({{ product.rating.count }}) </span>
+                </span>
                 <!-- <span class="star" id="1"></span>
                 <span class="star" id="2"></span>
                 <span class="star" id="3"></span>
@@ -80,25 +81,13 @@ export default {
       });
     },
     crease() {
-      this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.pivot.count = Math.min(
-          ++state.product.product.pivot.count,
-          state.product.product.stock
-        );
-      });
+      this.$store.commit("basket/crease",this.product);
     },
     decrease() {
-      this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.pivot.count = Math.max(
-          --state.product.product.pivot.count,
-          0
-        );
-      });
+      this.$store.commit("basket/decrease",this.product);
     },
     remove() {
-      this.$store.commit("modals/action", ({ state }) => {
-        state.product.product.pivot.count = 0;
-      });
+      this.$store.commit("basket/remove",this.product);
     },
   },
   computed: {
@@ -149,22 +138,22 @@ $action_button_radius: 15px;
     min-height: 500px;
     height: auto;
     max-width: 1200px;
-      @media screen and (max-width: $tablet) {
-        height: auto;
-        min-height: auto;
-      }
+    @media screen and (max-width: $tablet) {
+      height: auto;
+      min-height: auto;
+    }
     .information-wrapper {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: row;
       width: 100%;
-        height:100%;
+      height: 100%;
       @media screen and (max-width: $tablet) {
         justify-content: flex-start;
         align-items: center;
         flex-direction: column;
-        height:max-content;
+        height: max-content;
       }
       .image-wrapper {
         height: 100%;
@@ -174,8 +163,7 @@ $action_button_radius: 15px;
         @media screen and (max-width: $tablet) {
           margin: 0px 0px 10px 0px;
           min-width: 30%;
-        height: auto;
-
+          height: auto;
         }
         .image {
           width: 100%;
@@ -185,10 +173,10 @@ $action_button_radius: 15px;
       }
       .information {
         flex-grow: 1;
-      @media screen and (max-width: $tablet) {
-        height:max-content;
-        flex-grow: 0;
-      }
+        @media screen and (max-width: $tablet) {
+          height: max-content;
+          flex-grow: 0;
+        }
         .name {
           font-size: 28px;
           width: 100%;
@@ -239,13 +227,16 @@ $action_button_radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            .rate{
-              display: flex;align-items: center;justify-content: center;flex-direction: column;
+            .rate {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
               font-size: 30px;
-              .count{
+              .count {
                 transform: translateY(-5px);
                 font-size: 14px;
-                color: rgba(0,0,0,.5);
+                color: rgba(0, 0, 0, 0.5);
               }
             }
           }
@@ -281,7 +272,7 @@ $action_button_radius: 15px;
         padding: 0px 20px;
         border-radius: 90px;
         border-bottom: 3px solid rgba(0, 0, 0, 0.3);
-        color:rgba(0,0,0,.6);
+        color: rgba(0, 0, 0, 0.6);
       }
       .action-button {
         display: flex;
@@ -358,16 +349,16 @@ $action_button_radius: 15px;
         align-items: flex-start;
         justify-content: flex-end;
         flex-direction: row;
-        .remove{
+        .remove {
           transform: translateX(1px);
-          }
+        }
         .count-buttons {
           height: 100%;
           display: flex;
           align-items: flex-start;
           justify-content: flex-end;
           flex-direction: row;
-          
+
           .action-button {
             &:first-of-type {
               border-bottom-left-radius: $action_button_radius;

@@ -18,7 +18,7 @@ export default {
         '@/assets/scss/style.scss',
         '@/assets/scss/titles.scss',
     ],
-    plugins: [],
+    plugins: ['@/plugins/clientHook.client.js'],
     components: true,
     build:{},
     buildModules: [],

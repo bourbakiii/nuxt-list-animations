@@ -6,7 +6,7 @@ export const state = () => ({
 });
 export const mutations = {
     action(state,action){
-        action({state});
+        action(state);
     },
     open(state, props) {
         for (let modal_key in state) state[modal_key].show = false;

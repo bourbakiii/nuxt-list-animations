@@ -48,17 +48,6 @@ export default {
       products: [],
     };
   },
-  methods: {
-    remove(product) {
-      product.pivot.count = 0;
-    },
-    crease(product) {
-      product.pivot.count = Math.min(++product.pivot.count, product.stock);
-    },
-    decrease(product) {
-      product.pivot.count = Math.max(--product.pivot.count, 0);
-    },
-  },
 };
 </script>
 

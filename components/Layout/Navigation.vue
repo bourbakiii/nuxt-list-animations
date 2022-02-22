@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Placeholder</NuxtLink>
-      <NuxtLink to="/button" class="link bebas unselectable volume">Button</NuxtLink>
+      <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ export default {};
       font-size: 27px;
       transition: 0.1s;
       color:$white;
+      fill:white;
       &:hover {
         opacity: 0.9;
       }
@@ -37,6 +38,10 @@ export default {};
     display: flex;
     align-items: center;
     justify-content: space-between;
+     .nuxt-link-exact-active{
+        color:$selection_color;
+        fill:$selection_color;
+      }
     .links {
       display: flex;
       align-items: center;
