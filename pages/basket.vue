@@ -1,17 +1,18 @@
 <template>
   <div class="page basket-page">
-    <transition name="switch" appear>
+    <transition name="switch" mode='out-in' appear>
       <div v-if="basket_products.length" class="products">
+        <client-only>
           <ProductBasket
             v-for="product in basket_products"
             :product="product"
             :key="product.id"
           />
+        </client-only>
       </div>
-      <div v-else class="empty">Ваша корзина пуста</div>
+      <p v-else class="empty">Ваша корзина пуста</p>
     </transition>
     <LayoutModalsProduct />
-
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   name: "BasketPage",
   computed: {
     basket_products() {
-      return this.$store.state.basket.products;
+      return this.$store.state.basket?this.$store.state.basket.products:[];
     },
   },
 };
@@ -34,7 +35,7 @@ export default {
   }
   &-enter-active,
   &-leave-active {
-    transition: all 1s;
+    transition: all 0.1s ease;
   }
 }
 .page {

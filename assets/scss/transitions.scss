@@ -4,11 +4,9 @@
     opacity: 0;
 }
 
-&-enter-active {
-    transition: ease 0.2s;
-}
+&-enter-active,
 &-leave-active {
-    transition: ease 0.2s;
+    transition: all 0.1s ease;
 }
 &-move {
     position: absolute;

@@ -4,14 +4,21 @@
       <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
       <div class="icons">
       <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
-      <NuxtLink to="/profile" class="link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
+      <NuxtLink v-if='token' to="/profile" class="link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
+      <NuxtLink to="/login" class="link bebas unselectable volume"><IconsEnter scale='1.08'/></NuxtLink>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed:{
+    token(){
+      return this.$store.state.account.token;
+    }
+  }
+};
 </script>
 
 <style lang='scss' scoped>

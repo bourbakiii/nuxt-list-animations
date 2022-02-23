@@ -1,4 +1,4 @@
-export const state = () => ({ products: [1, 23] });
+export const state = () => ({ products: [] });
 Array.prototype.toggle_product = function (product) {
   if (this.some((el) => +el.id == +product.id))
     this.splice(this.map((el) => +el.id).indexOf(+product.id), 1);
