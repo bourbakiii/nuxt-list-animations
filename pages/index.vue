@@ -16,11 +16,15 @@
 <script>
 export default {
   name: "IndexPage",
-  async asyncData({ $axios }) {
-    let products = [];
-    let loading = true;
-    await $axios
-      .get("/products")
+  async fetch() {
+    this.products = [];
+    this.loading = true;
+    await this.$axios
+      .get("/products", {
+        params:{
+          limit:20
+        }
+      })
       .then(({ data }) => {
         data.forEach((element) => {
           Object.assign(element, {
@@ -34,18 +38,21 @@ export default {
           });
           delete element.title;
         });
-        products = data;
+        this.products = data;
       })
-      .finally(() => {
-        loading = false;
-      });
-    // TODO !_! Вывод ошибки
+      // TODO !_! Вывод ошибки
     // .catch(json=>console.log(json))
-    return { products, loading };
-  },
+      .finally(() => {
+        console.log('ЯМААААААН')
+        this.loading = false;
+      });
+      return this.products, this.loading;
+    },
+  fetchOnServer: false,
   data() {
     return {
       products: [],
+      loading:false
     };
   },
 };

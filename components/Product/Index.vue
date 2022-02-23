@@ -2,19 +2,14 @@
   <div class="product">
     <div class="image-wrapper">
       <img
-        @click="
-          $store.commit('modals/open', {
-            modal_name: 'product',
-            product: product,
-          })
-        "
+        @click="open_product_modal(product)"
         :src="product.image"
         class="image"
       />
     </div>
     <transition name="button-appear">
       <button
-        @click="product.pivot.count = 0"
+        @click="remove"
         v-if="product.pivot.count"
         class="pushable-button delete"
       >
@@ -58,29 +53,17 @@
 </template>
 
 <script>
+import product_modal from "@/mixins/product_modal.js";
 export default {
+  mixins:[product_modal],
   props: {
     product: {
       required: true,
     },
-    inCart: {
-      require: true,
-      default: false,
-    },
-  },
-  mounted() {
-    let index = this.$store.state.basket.products
-      .map((el) => +el.id)
-      .indexOf(+this.product.id);
-    console.log(index);
-    if (index >= 0)
-      this.product.pivot.count =
-        this.$store.state.basket.products[index].pivot.count;
   },
   methods: {
     add_favourite(){
-      // !!! Добавить стейт-фавориты
-      // this.product.is_favourite = !this.product.is_favourite;
+      this.$store.commit("favourites/toggle", this.product);
     },
     remove() {
       this.$store.commit("basket/remove", this.product);
@@ -93,6 +76,14 @@ export default {
     },
   },
   computed: {
+    inCart() {
+      let index = this.$store.state.basket.products.map(element=>+element.id).indexOf(+this.product.id);
+      if(index>=0){ 
+        this.product.pivot.count = this.$store.state.basket.products[index].pivot.count;
+        return true;
+        }
+      return false;
+    },
     price() {
       return this.product.discount_price ?? this.product.price;
     },

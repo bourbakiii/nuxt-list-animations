@@ -1,7 +1,7 @@
 <template>
-  <div class="basket-product product">
-    <img :src="product.image" alt="Product Image" class="image" />
-    <div class="middle-content">
+  <div @click.self='open_product_modal(product)' class="basket-product product">
+    <img @click='open_product_modal(product)' :src="product.image" alt="Product Image" class="image" />
+    <div @click='open_product_modal(product)' class="middle-content">
       <p class="name">{{ product.name }}</p>
       <span class="prices">
         <p class="price">{{ price }}<IconsRouble scale="0.72" /></p>
@@ -10,17 +10,26 @@
         </p>
       </span>
     </div>
-    <div class="buttons">
+    <div @click.self='open_product_modal(product)' class="buttons">
       <button @click="remove" class="remove pushable-button"><IconsClose scale='1.2' /></button>
       <button @click="decrease" class="decrease pushable-button"><IconsMinus scale='1.2' /></button>
       <p class="count">{{product.pivot.count}}</p>
       <button @click='crease' class="crease pushable-button"><IconsPlus  scale='1.2'/></button>
+      <button
+          :class="{ active: product.is_favourite }"
+          @click="add_favourite"
+          class="heart pushable-button"
+        >
+          <IconsHeart />
+        </button>
     </div>
   </div>
 </template>
 
 <script>
+import product_modal from "@/mixins/product_modal.js";
 export default {
+  mixins:[product_modal],
   props: {
     product: {
       required: true,
@@ -28,8 +37,7 @@ export default {
   },
   methods: {
     add_favourite(){
-      // !!! Добавить стейт-фавориты
-      // this.product.is_favourite = !this.product.is_favourite;
+      this.$store.commit("favourites/toggle", this.product);
     },
     remove() {
       this.$store.commit("basket/remove", this.product);
@@ -68,6 +76,7 @@ export default {
   flex-shrink: 0;
   min-height: 120px;
   margin-bottom: 10px;
+  cursor: pointer;
   &:last-of-type {
     margin-bottom: 0px;
   }
@@ -118,9 +127,48 @@ export default {
   .buttons{
     flex-shrink: 0;
     display: flex;align-items: center;justify-content: center;
+    .heart {
+      transition: 0.2s;
+      fill: rgba(0, 0, 0, 0.4);
+      svg {
+        animation: disactivate 0.2s forwards;
+        @keyframes disactivate {
+          0% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(0.85);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+      }
+      margin-left: 10px;
+      justify-self: flex-start;
+      &.active {
+        svg {
+          animation: activate 0.2s forwards;
+          @keyframes activate {
+            0% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.15);
+            }
+            100% {
+              fill: $red;
+              transform: scale(1);
+            }
+          }
+          fill: $red;
+        }
+      }
+    }
     .pushable-button{
       width:40px;
       height:40px;
+      
       &.remove{
         margin-right:10px;
       }

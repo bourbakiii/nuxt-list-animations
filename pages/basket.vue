@@ -12,6 +12,8 @@
       </div>
       <div v-else class="empty">Ваша корзина пуста</div>
     </transition>
+    <LayoutModalsProduct />
+
   </div>
 </template>
 
@@ -27,20 +29,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .product-switch{
-  &-enter,
-  &-leave-to {
-    opacity: 0;
+  &-enter, &-leave-to{
+    opacity:0;
+    transform: translateX(-80px);
   }
-  &-enter-active,
-  &-leave-active {
-    transition: all 1s;
+  &-enter-active, &-leave-active{
+    transition: all 0.3s ease;
   }
   &-move{
     position: absolute;
-    transition: all 1s;
+    transition: all 0.3 ease;
   }
 }
+
 .switch {
   &-enter,
   &-leave-to {
@@ -53,5 +56,11 @@ export default {
 }
 .page {
   flex-grow: 1;
+  .products{
+    position: relative;
+    .product{
+      width:100%;
+    }
+  }
 }
 </style>

@@ -125,6 +125,7 @@ $action_button_radius: 15px;
   justify-content: flex-start;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.2);
+  z-index: $modals_z;
   &::-webkit-scrollbar {
     display: none;
   }
