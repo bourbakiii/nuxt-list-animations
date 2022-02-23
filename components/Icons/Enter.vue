@@ -9,8 +9,7 @@
 export default {
     props:{
         scale: {
-            default:1
-        }
+            default:1}
     }
 }
 </script>
