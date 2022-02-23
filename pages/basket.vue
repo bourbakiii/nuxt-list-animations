@@ -1,10 +1,16 @@
 <template>
   <div class="page basket-page">
-    <transition name='switch' appear>
-      <div v-if='basket_products.length' class="products">
-        <ProductBasket v-for='product in basket_products' :product='product' :key='product.id'/>
+    <transition name="switch" appear>
+      <div v-if="basket_products.length" class="products">
+        <transition-group name="product-switch" appear>
+          <ProductBasket
+            v-for="product in basket_products"
+            :product="product"
+            :key="product.id"
+          />
+        </transition-group>
       </div>
-      <div v-else class='empty'>Ваша корзина пуста</div>
+      <div v-else class="empty">Ваша корзина пуста</div>
     </transition>
   </div>
 </template>
@@ -12,21 +18,36 @@
 <script>
 export default {
   name: "BasketPage",
-  computed:{
-    basket_products(){
+  computed: {
+    basket_products() {
       return this.$store.state.basket.products;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.switch{
-  &-enter,&-leave-to{
-  opacity: 0;
-
+.product-switch{
+  &-enter,
+  &-leave-to {
+    opacity: 0;
   }
-  &-enter-active,&-leave-active{
+  &-enter-active,
+  &-leave-active {
+    transition: all 1s;
+  }
+  &-move{
+    position: absolute;
+    transition: all 1s;
+  }
+}
+.switch {
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+  }
+  &-enter-active,
+  &-leave-active {
     transition: all 1s;
   }
 }
