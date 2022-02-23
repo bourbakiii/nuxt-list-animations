@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <NuxtLink to="/" class="link bebas unselectable volume">Placeholder</NuxtLink>
+      <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
       <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
     </div>
   </div>

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import product_modal from "@/mixins/product_modal.js";
+import product_modal from "@/mixins/modals/product.js";
 export default {
   mixins:[product_modal],
   props: {
