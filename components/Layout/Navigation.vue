@@ -2,7 +2,10 @@
   <div class="wrapper">
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
+      <div class="icons">
       <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
+      <NuxtLink to="/profile" class="link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +29,7 @@ export default {};
     width: 100%;
     height: 100%;
     max-width: $maxwidth;
+
     .link {
       font-size: 27px;
       transition: 0.1s;
@@ -42,14 +46,13 @@ export default {};
         color:$selection_color;
         fill:$selection_color;
       }
-    .links {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    
+    .icons{
+      display: flex;align-items: center;justify-content: center;
       .link{
-        margin-right:5px;
-        &:last-of-type{
-          margin-right:0px;
+        margin-left: 10%;
+        &:first-of-type{
+          margin-left:0px;
         }
       }
     }
