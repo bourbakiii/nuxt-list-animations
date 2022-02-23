@@ -18,11 +18,11 @@ function delete_by_id({
 export const mutations = {
     crease(state, product) {
         if (product.pivot.count == 0) state.products.unshift(product);
-        product.pivot.count = Math.min(++product.pivot.count, product.stock);
+        product.pivot.count = Math.min(product.pivot.count+=product.step, product.stock);
         save_at_local({ name: 'basket', value: JSON.stringify(state) });
     },
     decrease(state, product) {
-        product.pivot.count = Math.max(--product.pivot.count, 0);
+        product.pivot.count = Math.max(product.pivot.count-=product.step, 0);
         state.products = state.products.filter(element=>element.pivot.count>0);
         save_at_local({ name: 'basket', value: JSON.stringify(state) });
     },

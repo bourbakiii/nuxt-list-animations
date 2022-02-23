@@ -25,9 +25,10 @@ export default {
     modules: ['@nuxtjs/axios','@nuxtjs/style-resources'],
     styleResources: {
         scss: [
+            '@assets/scss/variables.scss',
             '@assets/scss/style.scss',
             '@assets/scss/titles.scss',
-            '@assets/scss/transitions.scss'
+            '@assets/scss/transitions.scss',
         ]
     },
     axios:{

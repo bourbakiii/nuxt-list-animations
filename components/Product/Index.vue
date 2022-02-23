@@ -35,7 +35,7 @@
       </transition>
       <transition name="show">
         <button
-          v-if="inCart"
+          v-if="count"
           class="crease decrease pushable-button"
           @click="decrease"
         >
@@ -43,7 +43,7 @@
         </button>
       </transition>
       <transition name="show" appear>
-        <p v-if="inCart" class="count">{{ count.toFixed(2) }}</p>
+        <p v-if="count" class="count">{{ count.toFixed(2) }}</p>
       </transition>
       <button class="add pushable-button" @click="crease">
         <IconsPlus fill="rgba(0,0,0,.5)" />
@@ -76,14 +76,6 @@ export default {
     },
   },
   computed: {
-    inCart() {
-      let index = this.$store.state.basket.products.map(element=>+element.id).indexOf(+this.product.id);
-      if(index>=0){ 
-        this.product.pivot.count = this.$store.state.basket.products[index].pivot.count;
-        return true;
-        }
-      return false;
-    },
     price() {
       return this.product.discount_price ?? this.product.price;
     },
@@ -91,7 +83,8 @@ export default {
       return this.product.discount_price ? this.product.price : null;
     },
     count() {
-      return this.product.pivot.count * this.product.step ?? this.product.step;
+      let index = this.$store.state.basket.products.map(el=>+el.id).indexOf(+this.product.id);
+      return index>=0?this.$store.state.basket.products[index].pivot.count:0; 
     },
   },
 };

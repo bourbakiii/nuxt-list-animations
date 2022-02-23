@@ -21,9 +21,9 @@ export default {
     this.loading = true;
     await this.$axios
       .get("/products", {
-        params:{
-          limit:20
-        }
+        params: {
+          limit: 20,
+        },
       })
       .then(({ data }) => {
         data.forEach((element) => {
@@ -34,25 +34,24 @@ export default {
             pivot: {
               count: 0,
             },
-            is_favourite: false
+            is_favourite: false,
           });
           delete element.title;
         });
         this.products = data;
       })
       // TODO !_! Вывод ошибки
-    // .catch(json=>console.log(json))
+      // .catch(json=>console.log(json))
       .finally(() => {
-        console.log('ЯМААААААН')
         this.loading = false;
       });
-      return this.products, this.loading;
-    },
+    return this.products, this.loading;
+  },
   fetchOnServer: false,
   data() {
     return {
       products: [],
-      loading:false
+      loading: false,
     };
   },
 };
@@ -63,11 +62,11 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fit, minMax(250px, 1fr));
   grid-gap: 10px;
-   @media screen and (max-width: $note) {
-  grid-template-columns: repeat(auto-fit, minMax(220px, 1fr));
+  @media screen and (max-width: $note) {
+    grid-template-columns: repeat(auto-fit, minMax(220px, 1fr));
   }
   @media screen and (max-width: $tablet) {
-  grid-template-columns: repeat(auto-fit, minMax(145px, 1fr));
+    grid-template-columns: repeat(auto-fit, minMax(145px, 1fr));
   }
   @media screen and (max-width: $startmobile) {
   }
