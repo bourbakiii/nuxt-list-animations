@@ -2,6 +2,9 @@ export const state = () => ({
     product: {
         show: false,
         product: null
+    },
+    login:{
+        show: false
     }
 });
 export const mutations = {
@@ -25,6 +28,10 @@ export const mutations = {
         switch (props.modal_name) {
             case "product": {
                 state.product.product = null;
+                break;
+            }
+            case "login": {
+                // state.login 
                 break;
             }
         }

@@ -5,9 +5,10 @@
       <div class="icons">
       <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
       <NuxtLink v-if='token' to="/profile" class="link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
-      <NuxtLink to="/login" class="link bebas unselectable volume"><IconsEnter scale='1.08'/></NuxtLink>
+      <button @click="$store.commit('modals/open',{modal_name:'login'})" class="link bebas unselectable volume"><IconsEnter scale='1.08'/></button>
       </div>
     </div>
+    <LayoutModalsLogin />
   </div>
 </template>
 
@@ -56,6 +57,9 @@ export default {
     
     .icons{
       display: flex;align-items: center;justify-content: center;
+      button{
+        background-color: transparent; border:none; outline:none;
+      }
       .link{
         margin-left: 10%;
         &:first-of-type{

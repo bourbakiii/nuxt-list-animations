@@ -3,7 +3,7 @@ export const state = () => {
 }
 
 export const actions = {
-    action(state,{action}){
-        action(state);
+    action(state,{action,...props}){
+        action(state,props);
     }
 }

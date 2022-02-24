@@ -1,6 +1,6 @@
 export default {
     head: {
-        title: 'Animations',
+        title: 'Сайт-скелет',
         htmlAttrs: {
             lang: 'ru'
         },
