@@ -18,7 +18,7 @@ export default {
         '@/assets/scss/style.scss',
         '@/assets/scss/titles.scss',
     ],
-    plugins: ['@/plugins/clientHook.client.js'],
+    plugins: ['@/plugins/clientHook.client.js','@/plugins/spinner.js'],
     components: true,
     build:{},
     buildModules: [],
@@ -26,6 +26,7 @@ export default {
     styleResources: {
         scss: [
             '@assets/scss/variables.scss',
+            '@assets/scss/effects.scss',
             '@assets/scss/style.scss',
             '@assets/scss/titles.scss',
             '@assets/scss/transitions.scss',

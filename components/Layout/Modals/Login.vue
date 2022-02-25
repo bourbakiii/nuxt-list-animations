@@ -3,11 +3,7 @@
     <div
       class="modal modals-product wrapper"
       v-if="show"
-      @click.self="
-        $store.commit('modals/close', {
-          modal_name: 'login',
-        })
-      "
+      @click.self="$store.commit('modals/close', {modal_name: 'login'})"
     >
       <form @submit.prevent="login" class="content">
         <h3 class="micro-title">Авторизация</h3>
@@ -31,13 +27,19 @@
           />
           <!-- <span class="problem">Текст проблемы</span> -->
         </span>
-        <button class="login-button">Войти</button>
+        <button class="ripple-effect login-button"><pulse-loader :loading="true" color="white" size="6px"></pulse-loader></button>
       </form>
     </div>
   </transition>
 </template>
 <script>
+import ripple from '@/mixins/effects/ripple.js';
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 export default {
+  components:{
+    'pulse-loader': PulseLoader
+  },
+  mixins:  [ripple],
   data() {
     return {
       username: null,
@@ -95,6 +97,7 @@ export default {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: $modals_z;
+  
   .content {
     max-width: 100%;
     width: 400px;
@@ -108,6 +111,7 @@ export default {
     padding: 10px;
     .login-button {
       width: 100%;
+      display: flex;align-items: center;justify-content: center;
       text-align: center;
       color: $white;
       background-color: $black;
@@ -118,10 +122,6 @@ export default {
       border: none;
       font-size: 16px;
       margin-top: 20px;
-      &:active {
-        background-color: $selection_color;
-        transform: scale(0.98);
-      }
     }
   }
   .input-wrapper {

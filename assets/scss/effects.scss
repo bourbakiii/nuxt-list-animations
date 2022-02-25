@@ -1,0 +1,23 @@
+.v-spinner {
+    overflow: hidden;
+    width: max-content;
+}
+.ripple-effect {
+    overflow: hidden;
+}
+.ripple {
+    position: absolute !important;
+    transition: 1s !important;
+    width: 0px;
+    height: 0px;
+    background-color: rgba(123,123,123,.6);
+    transform: translate(-50%, -50%);
+    clip-path: circle(50%);
+    animation: ripple_scale 1s forwards;
+    @keyframes ripple_scale {
+        100%{
+            transform: translate(-50%, -50%) scale(50);
+            background-color: transparent;
+        }
+    }
+}
