@@ -6,7 +6,12 @@
       @click.self="$store.commit('modals/close', { modal_name: 'login' })"
     >
       <form @submit.prevent="login" class="content">
-        <h3 class="micro-title">Авторизация</h3>
+        <span class="title-row">
+          <h2 class="micro-title">Авторизация</h2>
+          <NuxtLink to="/registration" class="registration-button ripple-effect"
+            >Регистрация</NuxtLink
+          >
+        </span>
         <span class="input-block">
           <p class="input-title">Имя пользователя</p>
           <span class="input-wrapper">
@@ -24,7 +29,7 @@
         <span class="input-block">
           <p class="input-title">Пароль</p>
           <span class="input-wrapper">
-            <IconsLock class="pre-icon" scale='0.9' />
+            <IconsLock class="pre-icon" scale="0.9" />
             <input
               v-model="password"
               :type="show_password ? 'type' : 'password'"
@@ -51,7 +56,7 @@
         </span>
         <button class="ripple-effect login-button">
           <transition name="opacity" mode="out-in">
-            <p class='unselectable' v-if="!loading">Вход</p>
+            <p class="unselectable" v-if="!loading">Вход</p>
             <pulse-loader
               v-else
               :loading="loading"
@@ -60,10 +65,7 @@
             ></pulse-loader>
           </transition>
         </button>
-        <span class="micro-buttons">
-          <NuxtLink to='/reset' class="micro-button">Забыли пароль?</NuxtLink>
-          <NuxtLink to='/registration' class="micro-button">Регистрация</NuxtLink>
-        </span>
+        <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
       </form>
     </div>
   </transition>
@@ -86,7 +88,7 @@ export default {
   },
   methods: {
     login() {
-      if(this.loading) return;
+      if (this.loading) return;
       //   if (!this.username && !this.password) {
       // сделать сообщения об ошибке и валидации
       // console.log("!!!Логин или пароль пусты");
@@ -164,6 +166,32 @@ export default {
     justify-content: flex-start;
     flex-direction: column;
     padding: 10px;
+    .title-row {
+      width: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-direction: row;
+      .registration-button {
+        width: max-content;
+        padding: 0px 10px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: $white;
+        background-color: $black;
+        outline: none;
+        transition: 0.25s;
+        height: 30px;
+        border-radius: 15px;
+        border: none;
+        font-size: 16px;
+        margin-top: 20px;
+        transform: translateY(-1px);
+      }
+    }
     .login-button {
       width: 100%;
       display: flex;
@@ -179,6 +207,16 @@ export default {
       border: none;
       font-size: 16px;
       margin-top: 20px;
+    }
+    .forget-button {
+      width: 100%;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row;
+      text-decoration: none;
+      color: $black;
     }
   }
   .input-block {
@@ -204,7 +242,7 @@ export default {
     overflow: hidden;
     padding: 5px;
     .pre-icon {
-      height:100%;
+      height: 100%;
     }
     input {
       height: 100%;
@@ -215,8 +253,8 @@ export default {
       font-size: 20px;
       padding: 15px;
       border-radius: 15px;
-      &#password-input{
-        padding-right:30px;
+      &#password-input {
+        padding-right: 30px;
       }
     }
     .eye {
