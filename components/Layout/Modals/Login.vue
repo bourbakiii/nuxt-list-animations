@@ -19,17 +19,17 @@
             placeholder="Имя пользователя"
             name="username"
           />
-          <span class="problem">Текст проблемы</span>
+          <!-- <span class="problem">Текст проблемы</span> -->
         </span>
         <span class="input-wrapper">
-          <p class="input-title">E-mail</p>
+          <p class="input-title">Пароль</p>
           <input
             v-model="password"
             type="password"
             placeholder="*******"
             name="password"
           />
-          <span class="problem">Текст проблемы</span>
+          <!-- <span class="problem">Текст проблемы</span> -->
         </span>
         <button class="login-button">Войти</button>
       </form>
