@@ -60,6 +60,10 @@
             ></pulse-loader>
           </transition>
         </button>
+        <span class="micro-buttons">
+          <NuxtLink to='/reset' class="micro-button">Забыли пароль?</NuxtLink>
+          <NuxtLink to='/registration' class="micro-button">Регистрация</NuxtLink>
+        </span>
       </form>
     </div>
   </transition>

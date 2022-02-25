@@ -3,9 +3,9 @@
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
       <div class="icons">
-      <NuxtLink to="/basket" class="link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
-      <NuxtLink v-if='token' to="/profile" class="link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
-      <button @click="$store.commit('modals/open',{modal_name:'login'})" class="link bebas unselectable volume"><IconsEnter scale='1.08'/></button>
+      <NuxtLink to="/basket" class="icon link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
+      <NuxtLink v-if='token' to="/profile" class="icon link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
+      <button @click="$store.commit('modals/open',{modal_name:'login'})" class="icon link bebas unselectable volume"><IconsEnter scale='1.19'/></button>
       </div>
     </div>
     <LayoutModalsLogin />
@@ -60,12 +60,10 @@ export default {
       button{
         background-color: transparent; border:none; outline:none;
       }
-      .link{
-        margin-left: 10%;
-        &:first-of-type{
-          margin-left:0px;
-        }
+      .icon:first-of-type{
+        margin-right: 10px;
       }
+      
     }
   }
 }

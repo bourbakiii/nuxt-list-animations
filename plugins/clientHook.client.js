@@ -1,7 +1,5 @@
 export default async context => {
   await context.store.dispatch('clientHook', context);
-
-
   document.querySelector('.ripple-effect').onclick = (event) => {
     let element = event.target.closest('.ripple-effect');
     let { width, height, x: element_x, y: element_y } = element.getBoundingClientRect();
@@ -11,12 +9,12 @@ export default async context => {
     const ripple = document.createElement('span');
     ripple.classList.add('ripple');
     element.appendChild(ripple);
-    Object.assign(ripple.style,{
+    Object.assign(ripple.style, {
       left: x_coordinate + 'px',
       top: y_coordinate + 'px',
-      width: max_side/20+'px',
-      height: max_side/20+'px',
+      width: max_side / 20 + 'px',
+      height: max_side / 20 + 'px',
     })
-    setTimeout(()=>ripple.remove(),1000)
+    setTimeout(() => ripple.remove(), 1000)
   }
 }
