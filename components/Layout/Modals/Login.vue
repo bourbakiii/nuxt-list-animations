@@ -45,7 +45,7 @@
                 class="eye"
                 scale="0.6"
               />
-              <IconsEyeClosed
+              <IconsEyeClosedR
                 @click.native="show_password = !show_password"
                 v-else-if="password"
                 class="eye"
