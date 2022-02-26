@@ -5,22 +5,23 @@
       v-if="show"
       @click.self="$store.commit('modals/close', { modal_name: 'login' })"
     >
-      <form @submit.prevent="login" class="content">
+    <transition name='opacity' mode='out-in'>
+      <form v-if='current_form=="login"' @submit.prevent="login" class="content">
         <span class="title-row">
           <h2 class="micro-title">Авторизация</h2>
-          <NuxtLink to="/registration" class="registration-button ripple-effect"
-            >Регистрация</NuxtLink
+          <button @click.prevent='current_form="registration"' class="switch-button ripple-effect"
+            >Регистрация</button
           >
         </span>
         <span class="input-block">
-          <p class="input-title">Имя пользователя</p>
+          <p class="input-title">Email</p>
           <span class="input-wrapper">
             <IconsProfile scale="1.2" class="pre-icon" />
             <input
-              v-model="username"
-              type="text"
-              placeholder="Имя пользователя"
-              name="username"
+              v-model="email"
+              type="email"
+              placeholder="example@gmail.com"
+              name="email"
               required
               autocomplete="off"
             />
@@ -67,6 +68,10 @@
         </button>
         <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
       </form>
+      <form v-else @submit.prevent="registration" class="content">
+        
+      </form>
+    </transition>
     </div>
   </transition>
 </template>
@@ -80,24 +85,27 @@ export default {
   mixins: [ripple],
   data() {
     return {
-      username: null,
+      email: null,
       password: null,
       loading: false,
       show_password: false,
+      current_form : 'login'
     };
   },
+
+  
   methods: {
     login() {
       if (this.loading) return;
-      //   if (!this.username && !this.password) {
+      //   if (!this.email && !this.password) {
       // сделать сообщения об ошибке и валидации
       // console.log("!!!Логин или пароль пусты");
       //   }
       this.loading = true;
       this.$store.dispatch("account/action", {
-        username: this.username,
+        email: this.email,
         password: this.password,
-        action: (state, { username = null, password = null }) => {
+        action: (state, { email = null, password = null }) => {
           this.$axios
             .post(
               "https://fakestoreapi.com/auth/login",
@@ -106,7 +114,7 @@ export default {
               }
               //   {
               // params: JSON.stringify({
-              //   username: "mor_2314",
+              //   email: "mor_2314",
               //   password: "83r5^_",
               // }),
               //   }
@@ -127,6 +135,11 @@ export default {
       return this.$store.state.modals.login.show;
     },
   },
+  watch:{
+    show(){
+      this.current_form='login';
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -140,6 +153,7 @@ export default {
     transition: all 0.1s ease;
   }
 }
+
 .wrapper {
   width: 100%;
   height: 100%;
@@ -172,7 +186,7 @@ export default {
       align-items: baseline;
       justify-content: space-between;
       flex-direction: row;
-      .registration-button {
+      .switch-button {
         width: max-content;
         padding: 0px 10px;
         text-decoration: none;
