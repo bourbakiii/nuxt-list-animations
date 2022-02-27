@@ -5,73 +5,232 @@
       v-if="show"
       @click.self="$store.commit('modals/close', { modal_name: 'login' })"
     >
-    <transition name='opacity' mode='out-in'>
-      <form v-if='current_form=="login"' @submit.prevent="login" class="content">
-        <span class="title-row">
-          <h2 class="micro-title">Авторизация</h2>
-          <button @click.prevent='current_form="registration"' class="switch-button ripple-effect"
-            >Регистрация</button
-          >
-        </span>
-        <span class="input-block">
-          <p class="input-title">Email</p>
-          <span class="input-wrapper">
-            <IconsProfile scale="1.2" class="pre-icon" />
-            <input
-              v-model="email"
-              type="email"
-              placeholder="example@gmail.com"
-              name="email"
-              required
-              autocomplete="off"
-            />
+      <transition name="opacity" mode="out-in">
+        <form
+          v-if="current_form == 'login'"
+          @submit.prevent="sign_in"
+          class="content"
+        >
+          <span class="title-row">
+            <h2 class="micro-title">Вход</h2>
+            <button
+              @click.prevent="switchForm"
+              class="switch-button ripple-effect"
+              :disabled="login_loading"
+            >
+              Регистрация
+            </button>
           </span>
-        </span>
-        <span class="input-block">
-          <p class="input-title">Пароль</p>
-          <span class="input-wrapper">
-            <IconsLock class="pre-icon" scale="0.9" />
-            <input
-              v-model="password"
-              :type="show_password ? 'type' : 'password'"
-              placeholder="*******"
-              name="password"
-              required
-              id="password-input"
-            />
-            <transition name="opacity">
-              <IconsEyeOpened
-                @click.native="show_password = !show_password"
-                v-if="!show_password && password"
-                class="eye"
-                scale="0.6"
+          <span class="input-block">
+            <p class="input-title">Email</p>
+            <span class="input-wrapper">
+              <IconsProfile scale="1.2" class="pre-icon" />
+              <input
+                v-model="login.email"
+                type="email"
+                placeholder="example@gmail.com"
+                name="email"
+                required
+                autocomplete="off"
+                :disabled="login_loading"
               />
-              <IconsEyeClosedR
-                @click.native="show_password = !show_password"
-                v-else-if="password"
-                class="eye"
-                scale="0.6"
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Пароль</p>
+            <span class="input-wrapper">
+              <IconsLock class="pre-icon" scale="0.9" />
+              <input
+                v-model="login.password"
+                :type="show_login_password ? 'type' : 'password'"
+                placeholder="*******"
+                name="password"
+                required
+                class="password-input"
+                :disabled="login_loading"
               />
+              <transition name="opacity">
+                <IconsEyeOpened
+                  @click.native="show_login_password = !show_login_password"
+                  v-if="!show_login_password && login.password"
+                  class="eye"
+                  scale="0.6"
+                />
+                <IconsEyeClosed
+                  @click.native="show_login_password = !show_login_password"
+                  v-else-if="login.password"
+                  class="eye"
+                  scale="0.6"
+                />
+              </transition>
+            </span>
+          </span>
+          <button class="ripple-effect action-button">
+            <transition name="opacity" mode="out-in">
+              <p class="unselectable" v-if="!login_loading">Вход</p>
+              <pulse-loader
+                v-else
+                :loading="login_loading"
+                color="white"
+                size="6px"
+              ></pulse-loader>
             </transition>
+          </button>
+          <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
+        </form>
+        <form v-else @submit.prevent="register" class="content">
+          <span class="title-row">
+            <h2 class="micro-title">Регистрация</h2>
+            <button
+              @click.prevent="switchForm"
+              class="switch-button ripple-effect"
+              :disabled="registration_loading"
+            >
+              Вход
+            </button>
           </span>
-        </span>
-        <button class="ripple-effect login-button">
-          <transition name="opacity" mode="out-in">
-            <p class="unselectable" v-if="!loading">Вход</p>
-            <pulse-loader
-              v-else
-              :loading="loading"
-              color="white"
-              size="6px"
-            ></pulse-loader>
-          </transition>
-        </button>
-        <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
-      </form>
-      <form v-else @submit.prevent="registration" class="content">
-        
-      </form>
-    </transition>
+          <span class="input-block">
+            <p class="input-title">Имя</p>
+            <span class="input-wrapper">
+              <input
+                v-model="registration.name"
+                type="text"
+                placeholder="Введите имя"
+                name="name"
+                required
+                autocomplete="off"
+                :disabled="registration_loading"
+              />
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Фамилия</p>
+            <span class="input-wrapper">
+              <input
+                v-model="registration.surname"
+                type="text"
+                placeholder="Введите фамилию"
+                name="surname"
+                required
+                autocomplete="off"
+                :disabled="registration_loading"
+              />
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Отчество</p>
+            <span class="input-wrapper">
+              <input
+                v-model="registration.father_name"
+                type="text"
+                placeholder="Введите отчество"
+                name="father_name"
+                required
+                autocomplete="off"
+                :disabled="registration_loading"
+              />
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Email</p>
+            <span class="input-wrapper">
+              <input
+                v-model="registration.email"
+                type="email"
+                placeholder="example@gmail.com"
+                name="email"
+                required
+                autocomplete="off"
+                :disabled="registration_loading"
+              />
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Пароль</p>
+            <span class="input-wrapper">
+              <IconsLock class="pre-icon" scale="0.9" />
+              <input
+                v-model="registration.password"
+                :type="show_registration_password ? 'type' : 'password'"
+                placeholder="*******"
+                name="password"
+                required
+                class="password-input"
+                :disabled="registration_loading"
+              />
+              <transition name="opacity">
+                <IconsEyeOpened
+                  @click.native="
+                    show_registration_password = !show_registration_password
+                  "
+                  v-if="!show_registration_password && registration.password"
+                  class="eye"
+                  scale="0.6"
+                />
+                <IconsEyeClosed
+                  @click.native="
+                    show_registration_password = !show_registration_password
+                  "
+                  v-else-if="registration.password"
+                  class="eye"
+                  scale="0.6"
+                />
+              </transition>
+            </span>
+          </span>
+          <span class="input-block">
+            <p class="input-title">Потвор пароля</p>
+            <span class="input-wrapper">
+              <IconsLock class="pre-icon" scale="0.9" />
+              <input
+                v-model="registration.password_repeat"
+                :type="show_registration_password_repeat ? 'type' : 'password'"
+                placeholder="*******"
+                name="password"
+                required
+                class="password-input"
+                :disabled="registration_loading"
+              />
+              <transition name="opacity">
+                <IconsEyeOpened
+                  @click.native="
+                    show_registration_password_repeat =
+                      !show_registration_password_repeat
+                  "
+                  v-if="
+                    !show_registration_password_repeat &&
+                    registration.password_repeat
+                  "
+                  class="eye"
+                  scale="0.6"
+                />
+                <IconsEyeClosed
+                  @click.native="
+                    show_registration_password_repeat =
+                      !show_registration_password_repeat
+                  "
+                  v-else-if="registration.password_repeat"
+                  class="eye"
+                  scale="0.6"
+                />
+              </transition>
+            </span>
+          </span>
+          <button class="ripple-effect action-button">
+            <transition name="opacity" mode="out-in">
+              <p class="unselectable" v-if="!registration_loading">
+                Зарегистрироваться
+              </p>
+              <pulse-loader
+                v-else
+                :loading="registration_loading"
+                color="white"
+                size="6px"
+              ></pulse-loader>
+            </transition>
+          </button>
+        </form>
+      </transition>
     </div>
   </transition>
 </template>
@@ -85,26 +244,37 @@ export default {
   mixins: [ripple],
   data() {
     return {
-      email: null,
-      password: null,
-      loading: false,
-      show_password: false,
-      current_form : 'login'
+      login: {
+        email: null,
+        password: null,
+      },
+      registration: {
+        name: null,
+        surname: null,
+        father_name: null,
+        email: null,
+        password: null,
+        password_repeat: null,
+      },
+      login_loading: false,
+      registration_loading: false,
+      show_login_password: false,
+      show_registration_password: false,
+      show_registration_password_repeat: false,
+      current_form: "login",
     };
   },
-
-  
   methods: {
-    login() {
-      if (this.loading) return;
+    sign_in() {
+      if (this.login_loading) return;
       //   if (!this.email && !this.password) {
       // сделать сообщения об ошибке и валидации
       // console.log("!!!Логин или пароль пусты");
       //   }
-      this.loading = true;
+      this.login_loading = true;
       this.$store.dispatch("account/action", {
-        email: this.email,
-        password: this.password,
+        email: this.login.email,
+        password: this.login.password,
         action: (state, { email = null, password = null }) => {
           this.$axios
             .post(
@@ -124,10 +294,78 @@ export default {
             })
             .catch(({ error }) => console.log(error))
             .finally(() => {
-              this.loading = false;
+              this.login_loading = false;
             });
         },
       });
+    },
+    register() {
+      if (this.registration_loading) return;
+      //   if (!this.email && !this.password) {
+      // сделать сообщения об ошибке и валидации
+      // console.log("!!!Логин или пароль пусты");
+      //   }
+      if (this.registration.password != this.registration.password_repeat)
+        return alert("Пароли не совпадают");
+      this.registration_loading = true;
+      action: (
+        state,
+        {
+          name = null,
+          surname = null,
+          father_name = null,
+          email = null,
+          password = null,
+          password_repeat = null,
+        }
+      ) => {
+        this.$axios
+          .post(
+            "https://fakestoreapi.com/auth/register",
+            {
+              method: "POST",
+            }
+            //   {
+            // params: JSON.stringify({
+            //   email: "mor_2314",
+            //   password: "83r5^_",
+            // }),
+            //   }
+          )
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch(({ error }) => console.log(error))
+          .finally(() => {
+            this.registration_loading = false;
+          });
+      };
+    },
+    switchForm() {
+      this.current_form == "login"
+        ? (() => {
+            this.current_form = "registration";
+            this.registration = {
+              name: null,
+              surname: null,
+              father_name: null,
+              email: null,
+              password: null,
+              password_repeat: null,
+            };
+            [
+              this.show_registration_password,
+              this.show_registration_password_repeat,
+            ] = [false, false];
+          })()
+        : (() => {
+            this.current_form = "login";
+            this.login = {
+              email: null,
+              password: null,
+            };
+            this.show_login_password = false;
+          })();
     },
   },
   computed: {
@@ -135,22 +373,22 @@ export default {
       return this.$store.state.modals.login.show;
     },
   },
-  watch:{
-    show(){
-      this.current_form='login';
-    }
-  }
+  watch: {
+    show() {
+      this.current_form = "registration";
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
 .opacity {
   &-enter,
   &-leave-to {
-    opacity: 0;
+    opacity: 0 !important;
   }
   &-enter-active,
   &-leave-active {
-    transition: all 0.1s ease;
+    transition: all 0.1s ease !important;
   }
 }
 
@@ -168,12 +406,11 @@ export default {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: $modals_z;
-
   .content {
     width: 100%;
     max-width: 400px;
     height: max-content;
-    background-color: white;
+    background-color: $white;
     border-radius: 15px;
     display: flex;
     align-items: center;
@@ -204,9 +441,14 @@ export default {
         font-size: 16px;
         margin-top: 20px;
         transform: translateY(-1px);
+        transition: 0.3s;
+        &:disabled, &[disaabled]
+        {
+          opacity:0.6;
+        }
       }
     }
-    .login-button {
+    .action-button {
       width: 100%;
       display: flex;
       align-items: center;
