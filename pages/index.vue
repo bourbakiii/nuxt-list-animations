@@ -16,6 +16,7 @@
 <script>
 export default {
   name: "IndexPage",
+  layout: "catalog",
   async fetch() {
     this.products = [];
     this.loading = true;

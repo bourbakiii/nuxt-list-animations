@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="navigation-wrapper wrapper">
     <div class="content">
       <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
       <div class="icons">
