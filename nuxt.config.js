@@ -33,7 +33,7 @@ export default {
         ]
     },
     axios:{
-        baseUrl: "https://fakestoreapi.com"
+        baseUrl: "http://localhost:5000"
     },
     
     pageTransition: {

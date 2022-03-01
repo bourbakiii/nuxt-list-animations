@@ -1,8 +1,6 @@
 <template>
-  <transition name="modal">
     <div
       class="modal modals-product wrapper"
-      v-if="show"
       @click.self="
         $store.commit('modals/close', {
           modal_name: 'product',
@@ -69,7 +67,6 @@
         </div>
       </div>
     </div>
-  </transition>
 </template>
 <script>
 export default {
@@ -91,9 +88,6 @@ export default {
     },
   },
   computed: {
-    show() {
-      return this.$store.state.modals.product.show;
-    },
     product() {
       return this.$store.state.modals.product.product ?? {};
     },
