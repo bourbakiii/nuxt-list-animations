@@ -1,7 +1,7 @@
 <template>
   <div class="layout default-layout">
     <LayoutNavigation />
-    <LayoutCatalogNavigation />
+    <!-- <LayoutCatalogNavigation /> -->
       <Nuxt />
     <LayoutFooter />
   </div>

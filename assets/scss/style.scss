@@ -112,3 +112,9 @@ html {
       transform: scale(0.96);
     }
   }
+  .unshowed{
+      overflow: hidden !important;
+      height:0px !important;
+      width: 0px !important;
+      opacity: 0 !important;
+  }

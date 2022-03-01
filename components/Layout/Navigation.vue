@@ -8,7 +8,7 @@
       <button @click="$store.commit('modals/open',{modal_name:'login'})" class="icon link bebas unselectable volume"><IconsEnter scale='1.19'/></button>
       </div>
     </div>
-    <LayoutModalsLogin />
+    <TransitionModal :show='show_login'><LayoutModalsLogin/></TransitionModal>
   </div>
 </template>
 
@@ -17,7 +17,10 @@ export default {
   computed:{
     token(){
       return this.$store.state.account.token;
-    }
+    },
+    show_login() {
+      return this.$store.state.modals.login.show;
+    },
   }
 };
 </script>

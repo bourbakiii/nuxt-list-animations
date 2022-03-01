@@ -1,8 +1,6 @@
 <template>
-  <transition name="modal">
     <div
       class="modal modals-product wrapper"
-      v-if="show"
       @click.self="$store.commit('modals/close', { modal_name: 'login' })"
     >
       <transition name="opacity" mode="out-in">
@@ -89,6 +87,30 @@
               Вход
             </button>
           </span>
+          <label
+            for="registration-image-input"
+            :class="{ wide: registration_image }"
+            class="image-label input-block"
+          >
+            <IconsPlus v-if="!registration_image" scale="2.3" />
+            <img
+              v-if="registration_image"
+              :src="registration_image"
+              alt="Profile image"
+              class="registration-image"
+            />
+            <input
+              type="file"
+              placeholder="Введите имя"
+              name="name"
+              required
+              id="registration-image-input"
+              class="unshowed"
+              :disabled="registration_loading"
+              @input="loadImage"
+              multiple="false"
+            />
+          </label>
           <span class="input-block">
             <p class="input-title">Имя</p>
             <span class="input-wrapper">
@@ -232,7 +254,6 @@
         </form>
       </transition>
     </div>
-  </transition>
 </template>
 <script>
 import ripple from "@/mixins/effects/ripple.js";
@@ -262,9 +283,15 @@ export default {
       show_registration_password: false,
       show_registration_password_repeat: false,
       current_form: "login",
+      registration_image: null,
     };
   },
   methods: {
+    loadImage(event) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(event.target.files[0]);
+      fileReader.onload = () => (this.registration_image = fileReader.result);
+    },
     sign_in() {
       if (this.login_loading) return;
       //   if (!this.email && !this.password) {
@@ -368,11 +395,7 @@ export default {
           })();
     },
   },
-  computed: {
-    show() {
-      return this.$store.state.modals.login.show;
-    },
-  },
+  
   watch: {
     show() {
       this.current_form = "registration";
@@ -406,6 +429,9 @@ export default {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: $modals_z;
+  overflow-y: auto;
+
+  padding-bottom: 50px;
   .content {
     width: 100%;
     max-width: 400px;
@@ -442,9 +468,9 @@ export default {
         margin-top: 20px;
         transform: translateY(-1px);
         transition: 0.3s;
-        &:disabled, &[disaabled]
-        {
-          opacity:0.6;
+        &:disabled,
+        &[disaabled] {
+          opacity: 0.6;
         }
       }
     }
@@ -482,6 +508,40 @@ export default {
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
+  }
+
+  .image-label {
+    cursor: pointer;
+    width: max-content;
+    height: auto;
+    min-width: 70px;
+    max-width: 100%;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $black;
+    border-radius: 10px;
+    fill: $white;
+    margin: 10px 0px;
+    align-self: center;
+    &.wide {
+      background-color: transparent;
+      width: 150px;
+      height: 150px;
+      .registration-image{
+        width:100%;
+        height:100%;
+        clip-path: circle(50%);
+        background-color: rgba(0,0,0,.5);
+      }
+    }
+    .registration-image {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: contain;
+    }
   }
   .input-title {
     font-size: 16px;
