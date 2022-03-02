@@ -266,16 +266,16 @@ export default {
   data() {
     return {
       login: {
-        email: null,
-        password: null,
+        email: "gabisov03912@gmail.com",
+        password: "123123",
       },
       registration: {
-        name: null,
-        surname: null,
-        father_name: null,
-        email: null,
-        password: null,
-        password_repeat: null,
+        name: "Руслан",
+        surname: "Габисов",
+        father_name: "Хасанович",
+        email: "gabisov03912@gmail.com",
+        password: "123123",
+        password_repeat: "123123",
       },
       login_loading: false,
       registration_loading: false,
@@ -303,57 +303,9 @@ export default {
         email: this.login.email,
         password: this.login.password,
         action: (state, { email = null, password = null }) => {
-          // this.$axios
-          //   .post(
-          //     "https://fakestoreapi.com/auth/login",
-          //     {
-          //       method: "POST",
-          //     }
-          //     //   {
-          //     // params: JSON.stringify({
-          //     //   email: "mor_2314",
-          //     //   password: "83r5^_",
-          //     // }),
-          //     //   }
-          //   )
-          //   .then(({ data }) => {
-          //     console.log(data);
-          //   })
-          //   .catch(({ error }) => console.log(error))
-          //   .finally(() => {
-          //     this.login_loading = false;
-          //   });
-        },
-      });
-    },
-    register() {
-      // if (this.registration_loading) return;
-      //   if (!this.email && !this.password) {
-      // сделать сообщения об ошибке и валидации
-      // console.log("!!!Логин или пароль пусты");
-      //   }
-      console.log(11);
-      if (this.registration.password != this.registration.password_repeat)
-        return alert("Пароли не совпадают");
-      this.registration_loading = true;
-      console.log("работай");
-      this.$store.dispatch("account/action", {
-        email: this.login.email,
-        password: this.login.password,
-        action: (
-          state,
-          {
-            name = null,
-            surname = null,
-            father_name = null,
-            email = null,
-            password = null,
-            password_repeat = null,
-          }
-        ) => {
           this.$axios
-            .post(
-              "api/users",
+            .put(
+              "https://fakestoreapi.com/auth/login",
               {
                 method: "POST",
               }
@@ -369,6 +321,47 @@ export default {
             })
             .catch(({ error }) => console.log(error))
             .finally(() => {
+              this.login_loading = false;
+            });
+        },
+      });
+    },
+    register() {
+      // if (this.registration_loading) return;
+      //   if (!this.email && !this.password) {
+      // сделать сообщения об ошибке и валидации
+      // console.log("!!!Логин или пароль пусты");
+      //   }
+      if (this.registration.password != this.registration.password_repeat)
+        return alert("Пароли не совпадают");
+      this.registration_loading = true;
+      this.$store.dispatch("account/action", {
+        ...this.registration,
+        action: (
+          state,
+          {
+            name = null,
+            surname = null,
+            father_name = null,
+            email = null,
+            password = null,
+            password_repeat = null,
+          }
+        ) => {
+          this.$axios
+            .post("api/users", {
+              name,
+              surname,
+              father_name,
+              email,
+              password,
+              password_repeat,
+            })
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch(({ error }) => console.log(error))
+            .finally(() => {
               this.registration_loading = false;
             });
         },
@@ -379,12 +372,12 @@ export default {
         ? (() => {
             this.current_form = "registration";
             this.registration = {
-              name: null,
-              surname: null,
-              father_name: null,
-              email: null,
-              password: null,
-              password_repeat: null,
+              name: "Руслан",
+              surname: "Габисов",
+              father_name: "Хасанович",
+              email: "gabisov03912@gmail.com",
+              password: "123123",
+              password_repeat: "123123",
             };
             [
               this.show_registration_password,
@@ -401,7 +394,6 @@ export default {
           })();
     },
   },
-
   watch: {
     show() {
       this.current_form = "registration";
