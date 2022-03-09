@@ -296,7 +296,8 @@ export default {
       if (this.login_loading) return;
       //   if (!this.email && !this.password) {
       // сделать сообщения об ошибке и валидации
-      // console.log("!!!Логин или пароль пусты");
+      // ! console.log("!!!Логин или пароль пусты");
+      // ! МОДАЛКА ОШИБКИ
       //   }
       this.login_loading = true;
       this.$store.dispatch("account/action", {
@@ -304,22 +305,14 @@ export default {
         password: this.login.password,
         action: (state, { email = null, password = null }) => {
           this.$axios
-            .put(
-              "https://fakestoreapi.com/auth/login",
-              {
-                method: "POST",
-              }
-              //   {
-              // params: JSON.stringify({
-              //   email: "mor_2314",
-              //   password: "83r5^_",
-              // }),
-              //   }
-            )
+            .post(`/api/user`, { email, password })
             .then(({ data }) => {
-              console.log(data);
+              this.$store.commit('modals/close',{
+                modal_key: "login"
+              });
+              state.commit("set_user", data);
             })
-            .catch(({ error }) => console.log(error))
+            .catch(( error ) => console.log(error))
             .finally(() => {
               this.login_loading = false;
             });
@@ -330,7 +323,8 @@ export default {
       // if (this.registration_loading) return;
       //   if (!this.email && !this.password) {
       // сделать сообщения об ошибке и валидации
-      // console.log("!!!Логин или пароль пусты");
+      // ! console.log("!!!Логин или пароль пусты");
+      // ! МОДАЛКА ОШИБКИ
       //   }
       if (this.registration.password != this.registration.password_repeat)
         return alert("Пароли не совпадают");
@@ -358,9 +352,12 @@ export default {
               password_repeat,
             })
             .then(({ data }) => {
-              console.log(data);
+              this.$store.commit('modals/close',{
+                modal_key: "login"
+              });
+              state.commit("set_user", data);
             })
-            .catch(({ error }) => console.log(error))
+            .catch(( error ) => console.log(error))
             .finally(() => {
               this.registration_loading = false;
             });

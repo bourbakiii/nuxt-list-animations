@@ -10,7 +10,7 @@
 export default {
   computed:{
     token(){
-      return this.$store.state.account.token;
+      return this.$store.state.modules.account.token;
     }
   }
 };

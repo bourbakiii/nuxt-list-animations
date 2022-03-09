@@ -3,7 +3,7 @@
     <div class="image-wrapper">
       <img
         @click="open_product_modal(product)"
-        :src="product.image"
+        :src="src"
         class="image"
       />
     </div>
@@ -15,6 +15,7 @@
       >
         <IconsClose />
       </button>
+      {{count}}
     </transition>
     <p class="name">{{ product.name }}</p>
     <span class="prices">
@@ -76,6 +77,9 @@ export default {
     },
   },
   computed: {
+    src(){
+      return `${this.$axios.defaults.baseURL}/products/images/${this.product.image}`;
+    },
     price() {
       return this.product.discount_price ?? this.product.price;
     },
@@ -83,7 +87,7 @@ export default {
       return this.product.discount_price ? this.product.price : null;
     },
     count() {
-      let index = this.$store.state.basket.products.map(el=>+el.id).indexOf(+this.product.id);
+      let index = this.$store.state.basket.products.map(el=>el._id).indexOf(this.product._id);
       return index>=0?this.$store.state.basket.products[index].pivot.count:0; 
     },
   },

@@ -19,37 +19,36 @@
 export default {
   name: "IndexPage",
   layout: "catalog",
-  // async fetch() {
-  //   this.products = [];
-  //   this.loading = true;
-  //   await this.$axios
-  //     .get("/products", {
-  //       params: {
-  //         limit: 20,
-  //       },
-  //     })
-  //     .then(({ data }) => {
-  //       data.forEach((element) => {
-  //         Object.assign(element, {
-  //           name: element.title,
-  //           stock: 100,
-  //           step: 1,
-  //           pivot: {
-  //             count: 0,
-  //           },
-  //           is_favourite: false,
-  //         });
-  //         delete element.title;
-  //       });
-  //       this.products = data;
-  //     })
-  //     // TODO !_! Вывод ошибки
-  //     // .catch(json=>console.log(json))
-  //     .finally(() => {
-  //       this.loading = false;
-  //     });
-  //   return this.products, this.loading;
-  // },
+  async fetch() {
+    this.products = [];
+    this.loading = true;
+    await this.$axios
+      .get("api/products", {
+        params: {
+          limit: 20,
+        },
+      })
+      .then(( {data} ) => {
+        data.forEach((element) => {
+          Object.assign(element, {
+            stock: 100,
+            step: 1,
+            pivot: {
+              count: 0,
+            },
+            is_favourite: false,
+          });
+          delete element.title;
+        });
+        this.products = data;
+      })
+      // TODO !_! Вывод ошибки
+      // .catch(json=>console.log(json))
+      .finally(() => {
+        this.loading = false;
+      });
+    return this.products, this.loading;
+  },
   fetchOnServer: false,
   data() {
     return {
