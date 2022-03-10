@@ -72,7 +72,6 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.4);
   height: 100%;
   .reset-form {
     width: 100%;

@@ -1,7 +1,7 @@
 <template>
   <div class="navigation-wrapper wrapper">
     <div class="content">
-      <NuxtLink to="/" class="link bebas unselectable volume">Bourbaki</NuxtLink>
+      <NuxtLink to="/" class="link bebas unselectable volume">Skelet</NuxtLink>
       <div class="icons">
       <NuxtLink to="/basket" class="icon link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
       <NuxtLink v-if='token' to="/profile" class="icon link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>

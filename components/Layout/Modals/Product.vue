@@ -24,8 +24,11 @@
               </span>
               <div class="stars">
                 <span class="rate"
-                  >{{ product.rating.rate }}
-                  <span class="count"> ({{ product.rating.count }}) </span>
+                  >
+                  <!-- {{ product.rating.rate }} -->
+                  <span class="count">
+                     <!-- ({{ product.rating.count }})  -->
+                     </span>
                 </span>
                 <!-- <span class="star" id="1"></span>
                 <span class="star" id="2"></span>
@@ -98,7 +101,8 @@ export default {
       return this.product.discount_price ? this.product.price : null;
     },
     count() {
-      return this.product.pivot.count * this.product.step ?? this.product.step;
+      return 0;
+      // return this.product.pivot.count * this.product.step ?? this.product.step;
     },
   },
 };

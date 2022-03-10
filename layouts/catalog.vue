@@ -1,7 +1,6 @@
 <template>
   <div class="layout default-layout">
     <LayoutNavigation />
-    <!-- <LayoutCatalogNavigation /> -->
       <Nuxt />
     <LayoutFooter />
   </div>
@@ -9,9 +8,8 @@
 
 <script>
 export default {
-    name:"CatalogLayout"
+  name: "CatalogLayout",
 };
 </script>
 <style lang="scss">
-
 </style>
