@@ -10,7 +10,8 @@
     position: relative;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
     &::selection {
-        background-color: rgba(122, 122, 122, 0.3);
+        background-color: rgba(orange,.6);
+        color:white;
     }
 }
 html {

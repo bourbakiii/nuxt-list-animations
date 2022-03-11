@@ -1,7 +1,9 @@
 <template>
   <div
     class="modal modals-authorisation wrapper"
-    @mousedown.self="$store.commit('modals/close', { modal_name: 'authorisation' })"
+    @mousedown.self="
+      $store.commit('modals/close', { modal_name: 'authorisation' })
+    "
   >
     <transition name="opacity" mode="out-in">
       <form
@@ -11,13 +13,13 @@
       >
         <span class="title-row">
           <h2 class="micro-title">Вход</h2>
-          <button
-            @mousedown.prevent="switchForm"
+          <span
+            @click="switchForm"
             class="switch-button ripple-effect"
             :disabled="login_loading"
           >
             Регистрация
-          </button>
+          </span>
         </span>
         <span class="input-block">
           <p class="input-title">Email</p>
@@ -88,13 +90,13 @@
       <form v-else @submit.prevent="register" class="content">
         <span class="title-row">
           <h2 class="micro-title">Регистрация</h2>
-          <button
-            @mousedown.prevent="switchForm"
+          <span
+            @click="switchForm"
             class="switch-button ripple-effect"
             :disabled="registration_loading"
           >
             Вход
-          </button>
+          </span>
         </span>
         <!-- <label
           for="registration-image-input"
@@ -133,6 +135,9 @@
               :disabled="registration_loading"
             />
           </span>
+          <span class="error" v-if="errors.registration.validation_errors">
+            {{ errors.registration.validation_errors.name }}
+          </span>
         </span>
         <span class="input-block">
           <p class="input-title">Фамилия</p>
@@ -146,6 +151,9 @@
               autocomplete="off"
               :disabled="registration_loading"
             />
+          </span>
+          <span class="error" v-if="errors.registration.validation_errors">
+            {{ errors.registration.validation_errors.surname }}
           </span>
         </span>
         <span class="input-block">
@@ -161,6 +169,9 @@
               :disabled="registration_loading"
             />
           </span>
+          <span class="error" v-if="errors.registration.validation_errors">
+            {{ errors.registration.validation_errors.father_name }}
+          </span>
         </span>
         <span class="input-block">
           <p class="input-title">Email</p>
@@ -174,6 +185,9 @@
               autocomplete="off"
               :disabled="registration_loading"
             />
+          </span>
+          <span class="error" v-if="errors.registration.validation_errors">
+            {{ errors.registration.validation_errors.email }}
           </span>
         </span>
         <span class="input-block">
@@ -208,9 +222,12 @@
               />
             </transition>
           </span>
+          <span class="error" v-if="errors.registration.validation_errors">
+            {{ errors.registration.validation_errors.password }}
+          </span>
         </span>
         <span class="input-block">
-          <p class="input-title">Потвор пароля</p>
+          <p class="input-title">Повтор пароля</p>
           <span class="input-wrapper">
             <IconsLock class="pre-icon" scale="0.9" />
             <input
@@ -260,6 +277,9 @@
             ></pulse-loader>
           </transition>
         </button>
+        <TransitionOpacity :show="!!errors.registration.general_message">
+          <LayoutMessageError :message="errors.registration.general_message" />
+        </TransitionOpacity>
       </form>
     </transition>
   </div>
@@ -276,6 +296,9 @@ export default {
     return {
       errors: {
         login: {
+          general_message: null,
+        },
+        registration: {
           general_message: null,
         },
       },
@@ -328,7 +351,7 @@ export default {
             })
             .catch(({ response }) => {
               if (!Object.keys(response.data).includes("success")) {
-                console.log("%cНеотработанная ошибка");
+                console.log("%cНеобработанная ошибка", "background-color:red");
                 console.log(response.data);
               } else {
                 this.errors.login = response.data;
@@ -378,7 +401,14 @@ export default {
               });
               state.commit("set_user", data);
             })
-            .catch((error) => console.log(error))
+            .catch(({ response }) => {
+              if (!Object.keys(response.data).includes("success")) {
+                console.log("%cНеобработанная ошибка", "background-color:red");
+                console.log(response.data);
+              } else {
+                this.errors.registration = response.data;
+              }
+            })
             .finally(() => {
               this.registration_loading = false;
             });
@@ -410,6 +440,14 @@ export default {
             };
             this.show_login_password = false;
           })();
+          this.errors = {
+        login: {
+          general_message: null,
+        },
+        registration: {
+          general_message: null,
+        },
+         }
     },
   },
   watch: {
@@ -417,8 +455,8 @@ export default {
       this.current_form = "registration";
     },
     "$route.path"() {
-      this.$store.commit('modals/close', { modal_name: 'authorisation' });
-    }
+      this.$store.commit("modals/close", { modal_name: "authorisation" });
+    },
   },
 };
 </script>
@@ -527,7 +565,7 @@ export default {
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    .error{
+    .error {
       color: $red;
     }
   }
