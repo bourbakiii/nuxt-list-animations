@@ -347,7 +347,7 @@ export default {
               this.$store.commit("modals/close", {
                 modal_key: "login",
               });
-              state.commit("set_user", data);
+              state.commit("set_account", data.user);
             })
             .catch(({ response }) => {
               if (!Object.keys(response.data).includes("success")) {
@@ -399,7 +399,7 @@ export default {
               this.$store.commit("modals/close", {
                 modal_key: "login",
               });
-              state.commit("set_user", data);
+              state.commit("set_account", data.user);
             })
             .catch(({ response }) => {
               if (!Object.keys(response.data).includes("success")) {
