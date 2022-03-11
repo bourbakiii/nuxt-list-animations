@@ -5,10 +5,10 @@
       <div class="icons">
       <NuxtLink to="/basket" class="icon link bebas unselectable volume"><IconsBasket scale='1.08'/><span class="basket-count"></span></NuxtLink>
       <NuxtLink v-if='token' to="/profile" class="icon link bebas unselectable volume"><IconsProfile scale='1.08'/></NuxtLink>
-      <button @click="$store.commit('modals/open',{modal_name:'login'})" class="icon link bebas unselectable volume"><IconsEnter scale='1.19'/></button>
+      <button @click="$store.commit('modals/open',{modal_name:'authorisation'})" class="icon link bebas unselectable volume"><IconsEnter scale='1.19'/></button>
       </div>
     </div>
-    <TransitionModal :show='show_login'><LayoutModalsLogin/></TransitionModal>
+    <TransitionModal :show='show_authorisation'><LayoutModalsAuthorisation/></TransitionModal>
   </div>
 </template>
 
@@ -18,8 +18,8 @@ export default {
     token(){
       return this.$store.state.account.token;
     },
-    show_login() {
-      return this.$store.state.modals.login.show;
+    show_authorisation() {
+      return this.$store.state.modals.authorisation.show;
     },
   }
 };

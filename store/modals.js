@@ -3,7 +3,7 @@ export const state = () => ({
         show: false,
         product: null
     },
-    login:{
+    authorisation:{
         show: false
     }
 });
@@ -30,7 +30,7 @@ export const mutations = {
                 state.product.product = null;
                 break;
             }
-            case "login": {
+            case "authorisation": {
                 // state.login 
                 break;
             }

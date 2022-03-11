@@ -1,7 +1,7 @@
 <template>
   <div
-    class="modal modals-product wrapper"
-    @click.self="$store.commit('modals/close', { modal_name: 'login' })"
+    class="modal modals-authorisation wrapper"
+    @mousedown.self="$store.commit('modals/close', { modal_name: 'authorisation' })"
   >
     <transition name="opacity" mode="out-in">
       <form
@@ -12,7 +12,7 @@
         <span class="title-row">
           <h2 class="micro-title">Вход</h2>
           <button
-            @click.prevent="switchForm"
+            @mousedown.prevent="switchForm"
             class="switch-button ripple-effect"
             :disabled="login_loading"
           >
@@ -32,6 +32,9 @@
               autocomplete="off"
               :disabled="login_loading"
             />
+          </span>
+          <span class="error" v-if="errors.login.validation_errors">
+            {{ errors.login.validation_errors.email }}
           </span>
         </span>
         <span class="input-block">
@@ -62,6 +65,9 @@
               />
             </transition>
           </span>
+          <span class="error" v-if="errors.login.validation_errors">
+            {{ errors.login.validation_errors.password }}
+          </span>
         </span>
         <button class="ripple-effect action-button">
           <transition name="opacity" mode="out-in">
@@ -75,12 +81,15 @@
           </transition>
         </button>
         <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
+        <TransitionOpacity :show="!!errors.login.general_message">
+          <LayoutMessageError :message="errors.login.general_message" />
+        </TransitionOpacity>
       </form>
       <form v-else @submit.prevent="register" class="content">
         <span class="title-row">
           <h2 class="micro-title">Регистрация</h2>
           <button
-            @click.prevent="switchForm"
+            @mousedown.prevent="switchForm"
             class="switch-button ripple-effect"
             :disabled="registration_loading"
           >
@@ -265,9 +274,14 @@ export default {
   mixins: [ripple],
   data() {
     return {
+      errors: {
+        login: {
+          general_message: null,
+        },
+      },
       login: {
         email: "gabisov03912@gmail.com",
-        password: "123123",
+        password: "12312",
       },
       registration: {
         name: "Руслан",
@@ -307,12 +321,19 @@ export default {
           this.$axios
             .post(`/api/user`, { email, password })
             .then(({ data }) => {
-              this.$store.commit('modals/close',{
-                modal_key: "login"
+              this.$store.commit("modals/close", {
+                modal_key: "login",
               });
               state.commit("set_user", data);
             })
-            .catch(( error ) => console.log(error))
+            .catch(({ response }) => {
+              if (!Object.keys(response.data).includes("success")) {
+                console.log("%cНеотработанная ошибка");
+                console.log(response.data);
+              } else {
+                this.errors.login = response.data;
+              }
+            })
             .finally(() => {
               this.login_loading = false;
             });
@@ -352,12 +373,12 @@ export default {
               password_repeat,
             })
             .then(({ data }) => {
-              this.$store.commit('modals/close',{
-                modal_key: "login"
+              this.$store.commit("modals/close", {
+                modal_key: "login",
               });
               state.commit("set_user", data);
             })
-            .catch(( error ) => console.log(error))
+            .catch((error) => console.log(error))
             .finally(() => {
               this.registration_loading = false;
             });
@@ -395,6 +416,9 @@ export default {
     show() {
       this.current_form = "registration";
     },
+    "$route.path"() {
+      this.$store.commit('modals/close', { modal_name: 'authorisation' });
+    }
   },
 };
 </script>
@@ -503,6 +527,9 @@ export default {
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
+    .error{
+      color: $red;
+    }
   }
 
   .image-label {

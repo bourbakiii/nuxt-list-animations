@@ -1,5 +1,6 @@
 <template>
-  <transition v-if='show' name="modal">
+  <transition v-if='show' name="opacity">
+      {{show}}
     <slot></slot>
   </transition>
 </template>
@@ -10,7 +11,6 @@ export default {
             required: true,
             default: true
         }
-    },
-    
+    }
 }
 </script>
