@@ -82,7 +82,7 @@
             ></pulse-loader>
           </transition>
         </button>
-        <NuxtLink to="/reset" class="forget-button">Забыли пароль?</NuxtLink>
+        <NuxtLink to="/reset/send" class="forget-button">Забыли пароль?</NuxtLink>
         <TransitionOpacity :show="!!errors.login.general_message">
           <LayoutMessageError :message="errors.login.general_message" />
         </TransitionOpacity>

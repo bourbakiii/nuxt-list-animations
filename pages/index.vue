@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss' scoped>
 .page{
   display: flex;align-items: center;justify-content: center;
   font-size: 60px;

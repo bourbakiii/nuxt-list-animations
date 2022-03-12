@@ -27,6 +27,9 @@
           ></pulse-loader>
         </transition>
       </button>
+      <TransitionOpacity :show="!!errors.general_message">
+        <LayoutMessageError :message="errors.general_message" />
+      </TransitionOpacity>
     </form>
   </div>
 </template>
@@ -41,16 +44,32 @@ export default {
   mixins: [ripple],
   data() {
     return {
-      email: null,
+      email: "",
       reset_loading: false,
+      errors: {},
     };
   },
   methods: {
     sendResetCode() {
+      // ! Сообщение о пустом маиле
+      if (!this.email) return;
       this.reset_loading = true;
       this.$axios
-        .get("api/reset/code", this.email)
-        .finally(() => this.reset_loading = false);
+        .get("api/reset/send", {
+          params: {
+            email: this.email,
+          },
+        })
+        .then(() => {
+          this.errors = {};
+          this.$store.commit("setParameter", {
+            name: "reset",
+            value: { email: this.email, permission: false },
+          });
+          this.$router.push("password");
+        })
+        .catch(({ response }) => this.errors = response.data)
+        .finally(() => (this.reset_loading = false));
     },
   },
 };
@@ -78,6 +97,7 @@ export default {
     max-width: 400px;
   }
   .action-button {
+    margin-bottom: 10px;
     width: 100%;
     display: flex;
     align-items: center;
