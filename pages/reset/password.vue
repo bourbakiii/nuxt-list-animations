@@ -1,6 +1,10 @@
 <template>
   <div class="page password-reset-page">
-    <form @submit.prevent="checkForACode" class="code-form">
+    <form
+      v-if="form == 'code'"
+      @submit.prevent="checkForACode"
+      class="code-form"
+    >
       <span class="input-block">
         <p class="input-title">Код</p>
         <span class="input-wrapper">
@@ -32,6 +36,90 @@
         <LayoutMessageError :message="errors.code.general_message" />
       </TransitionOpacity>
     </form>
+    <form
+      v-if="form == 'password'"
+      @submit.prevent="sendPassword"
+      class="code-form"
+    >
+      <span class="input-block">
+        <p class="input-title">Пароль</p>
+        <span class="input-wrapper">
+          <IconsLock class="pre-icon" scale="0.9" />
+          <input
+            v-model="password"
+            :type="show_password ? 'type' : 'password'"
+            placeholder="*******"
+            name="password"
+            required
+            class="password-input"
+            :disabled="password_loading"
+          />
+          <transition name="opacity">
+            <IconsEyeOpened
+              @click.native="show_password = !show_password"
+              v-if="!show_password && password"
+              class="eye"
+              scale="0.6"
+            />
+            <IconsEyeClosed
+              @click.native="show_password = !show_password"
+              v-else-if="password"
+              class="eye"
+              scale="0.6"
+            />
+          </transition>
+        </span>
+        <span class="error" v-if="errors.password.validation_errors">
+          {{ errors.password.validation_errors.password }}
+        </span>
+      </span>
+      <span class="input-block">
+        <p class="input-title">Повтор пароля</p>
+        <span class="input-wrapper">
+          <IconsLock class="pre-icon" scale="0.9" />
+          <input
+            v-model="password_repeat"
+            :type="show_password_repeat ? 'type' : 'password'"
+            placeholder="*******"
+            name="password_repeat"
+            required
+            class="password-repeat-input"
+            :disabled="password_repeat_loading"
+          />
+          <transition name="opacity">
+            <IconsEyeOpened
+              @click.native="show_password_repeat = !show_password_repeat"
+              v-if="!show_password_repeat && password_repeat"
+              class="eye"
+              scale="0.6"
+            />
+            <IconsEyeClosed
+              @click.native="show_password_repeat = !show_password_repeat"
+              v-else-if="password_repeat"
+              class="eye"
+              scale="0.6"
+            />
+          </transition>
+        </span>
+        <span class="error" v-if="errors.password.validation_errors">
+          {{ errors.password.validation_errors.password_repeat }}
+        </span>
+      </span>
+      <button class="ripple-effect action-button">
+        <transition name="opacity" mode="out-in">
+          <p class="unselectable" v-if="!password_loading">Сменить пароль</p>
+          <pulse-loader
+            v-else
+            :loading="password_loading"
+            color="white"
+            size="6px"
+          ></pulse-loader>
+        </transition>
+      </button>
+      <TransitionOpacity :show="!!errors.password.general_message">
+        <LayoutMessageError :message="errors.password.general_message" />
+      </TransitionOpacity>
+    </form>
   </div>
 </template>
 
@@ -45,10 +133,18 @@ export default {
   mixins: [ripple],
   data() {
     return {
+      password: null,
+      password_repeat: null,
+      show_password: false,
+      show_password_repeat: false,
+      form: "code",
       code: "",
       code_loading: false,
+      password_loading: false,
+      password_repeat_loading: false,
       errors: {
         code: {},
+        password: {},
       },
     };
   },
@@ -60,8 +156,9 @@ export default {
   methods: {
     checkForACode() {
       // ! Сообщение о пустом коде
+
       if (!this.code) return;
-          this.errors.code = {};
+      this.errors.code = {};
       this.code_loading = true;
       this.$axios
         .post("api/reset/check", {
@@ -69,9 +166,31 @@ export default {
           code: this.code,
         })
         .then(() => {
+          this.form = "password";
         })
-        .catch(({response}) => (this.errors.code = response.data))
-        .finally(() => (this.code_loading = false));
+        .catch(({ response }) => {
+          this.errors.code = response.data;
+        })
+        .finally(() => this.code_loading = false);
+    },
+    sendPassword() {
+      console.log("Работай, долбаеб");
+      // ! Сообщения
+      if (!this.password || !this.password_repeat || this.password != this.password_repeat) return;
+      this.errors.password = {};
+      this.password_loading = true;
+      this.$axios
+        .put("api/reset", {
+          email: this.email,
+          password: this.password,
+        })
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(({ response }) => {
+          this.errors.password = response.data;
+        })
+        .finally(() => this.password_loading = false);
     },
   },
 };
