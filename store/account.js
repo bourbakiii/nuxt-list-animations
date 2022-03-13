@@ -12,15 +12,34 @@ export const state = () => ({
 function save_at_local({
   name = null,
   value = null }) {
-  if (!name || !value) return alert(`Переданы не все параметры - name:${name ?? 'ПУСТО'}, value:${value ?? 'ПУСТО'}`);
-  if (typeof localStorage != undefined) localStorage.setItem(name, value);
+  if (!name || !value) console.log(`%cПереданы не все параметры - name:${name ?? 'ПУСТО'}, value:${value ?? 'ПУСТО'}`,'background-color:orange;color:white;font-size:15px;');
+  if (typeof localStorage != undefined) {
+    if(!value && name) return localStorage.removeItem(name);
+    else if(value && name) localStorage.setItem(name, value);
+  }
   else alert('LocalStorage не прогружен');
 }
 export const mutations = {
   set_account(state, data) {
     Object.assign(state, { ...data });
-    save_at_local({ name: 'token', value:data.token });
+    save_at_local({ name: 'token', value:state.token });
   },
+  clear_account(state){
+    state = {
+      email: null,
+      father_name: null,
+      image: null,
+      name: null,
+      permission: "guest",
+      surname: null,
+      token: null,
+      verification: false,
+      _id: null,
+    }
+    console.log('УОУ БЛЯ');
+    console.log(state);
+    save_at_local({ name: 'token', value:state.token });
+  }
 };
 
 export const actions = {
@@ -38,6 +57,7 @@ export const actions = {
     }).catch((error)=>{
       console.log('Error is:');
       console.log(console.log(error));
+      state.commit('clear_account')
     })
   }
 };

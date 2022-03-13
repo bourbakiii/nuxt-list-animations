@@ -165,21 +165,28 @@ export default {
           code: this.code,
         })
         .then(() => {
-          this.$store.commit('setParameter',{name:"reset",value:{
-                email: this.$store.state.reset.email,
-                permission:true
-              }});
+          this.$store.commit("setParameter", {
+            name: "reset",
+            value: {
+              email: this.$store.state.reset.email,
+              permission: true,
+            },
+          });
           this.form = "password";
         })
         .catch(({ response }) => {
           this.errors.code = response.data;
         })
-        .finally(() => this.code_loading = false);
+        .finally(() => (this.code_loading = false));
     },
     sendPassword() {
-      console.log("Работай, долбаеб");
       // ! Сообщения
-      if (!this.password || !this.password_repeat || this.password != this.password_repeat) return;
+      if (
+        !this.password ||
+        !this.password_repeat ||
+        this.password != this.password_repeat
+      )
+        return;
       this.errors.password = {};
       this.password_loading = true;
       this.$axios
@@ -187,21 +194,23 @@ export default {
           email: this.email,
           password: this.password,
         })
-        .then(({data}) => {
+        .then(({ data }) => {
           this.$router.push("/");
-              this.$store.commit("account/set_account", data.user);
-              this.$store.commit('setParameter',{name:"reset",value:{
-                email:null,
-                permission:false
-              }});
+          this.$store.commit("account/set_account", data.user);
+          this.$store.commit("setParameter", {
+            name: "reset",
+            value: {
+              email: null,
+              permission: false,
+            },
+          });
         })
         .catch(({ response }) => {
           this.errors.password = response.data;
         })
-        .finally(() => this.password_loading = false);
+        .finally(() => (this.password_loading = false));
     },
   },
-  
 };
 </script>
 
