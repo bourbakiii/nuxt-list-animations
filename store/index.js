@@ -23,7 +23,7 @@ export const mutations = {
       alert(
         `Index.js/SetParameter - не все параметры переданы name:${name} value:${value}`
       );
-    Vue.set(state, 'reset', value);
+    Vue.set(state, name, value);
     save_at_local({name:"reset",value:JSON.stringify(state.reset)});
   },
 };

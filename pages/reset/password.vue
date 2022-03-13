@@ -156,7 +156,6 @@ export default {
   methods: {
     checkForACode() {
       // ! Сообщение о пустом коде
-
       if (!this.code) return;
       this.errors.code = {};
       this.code_loading = true;
@@ -166,6 +165,10 @@ export default {
           code: this.code,
         })
         .then(() => {
+          this.$store.commit('setParameter',{name:"reset",value:{
+                email: this.$store.state.reset.email,
+                permission:true
+              }});
           this.form = "password";
         })
         .catch(({ response }) => {
@@ -184,8 +187,13 @@ export default {
           email: this.email,
           password: this.password,
         })
-        .then(() => {
+        .then(({data}) => {
           this.$router.push("/");
+              this.$store.commit("account/set_account", data.user);
+              this.$store.commit('setParameter',{name:"reset",value:{
+                email:null,
+                permission:false
+              }});
         })
         .catch(({ response }) => {
           this.errors.password = response.data;
@@ -193,6 +201,7 @@ export default {
         .finally(() => this.password_loading = false);
     },
   },
+  
 };
 </script>
 
