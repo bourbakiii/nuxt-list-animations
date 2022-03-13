@@ -29,8 +29,6 @@ export const mutations = {
 };
 export const actions = {
   async nuxtServerInit({ state, dispatch }) {
-    // dispatch('account/get');
-    // console.log(state);
   },
   async clientHook({ state, dispatch, commit }, context) {
     // GLOBAL_LOCAL_SET

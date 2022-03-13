@@ -24,7 +24,6 @@ export default {
     methods:{
         addPixelTo(event){
             this.variable = event.target.value + this.convert??'';
-            console.log(this.variable);
         }
     }
 }

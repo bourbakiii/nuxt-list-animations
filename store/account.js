@@ -36,8 +36,6 @@ export const mutations = {
       verification: false,
       _id: null,
     }
-    console.log('УОУ БЛЯ');
-    console.log(state);
     save_at_local({ name: 'token', value:state.token });
   }
 };
